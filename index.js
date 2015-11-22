@@ -23,13 +23,15 @@ ui: {
 
 ,command: '/usr/local/bin/iStats'
 
-,refreshFrequency: 1000
+,refreshFrequency: 3000
 
 ,render: function(output) {
+  var data = this.parseOutput(output);
   var html  = '<div id="stats">';
       html += this.renderChart('CPU', 'icon-cpu', 100, 0);
-      html += this.renderChart('Fan 1', 'icon-fan', 100, 0);
-      html += this.renderChart('Fan 2', 'icon-fan', 100, 0);
+  for (var i = 0; i < data.fan['total-fans-in-system']; i++) {
+      html += this.renderChart('Fan ' + i, 'icon-fan', 100, 0);
+  }
       html +=  '</div>';
   return html;
 }
@@ -43,13 +45,12 @@ ui: {
   var c = Math.floor(2 * Math.PI * this.ui.radius);
 
   $('#stats .cpu circle.bar').css('stroke-dasharray', Math.floor( (data.cpu['cpu-temp'] / MAX_CPU * 100) * c/100) + ' ' + c);
-  $('#stats .cpu .temp').text(Math.floor(data.cpu['cpu-temp']) + '°');
+  $('#stats .cpu .temp').text(Math.floor(data.cpu['cpu-temp']) + '°C');
 
-  $('#stats .fan-1 circle.bar').css('stroke-dasharray', Math.floor( (data.fan['fan-0-speed'] / MAX_FAN * 100) * c/100) + ' ' + c);
-  $('#stats .fan-1 .temp').text(Math.floor(data.fan['fan-0-speed']) + ' RPM');
-
-  $('#stats .fan-2 circle.bar').css('stroke-dasharray', Math.floor( (data.fan['fan-1-speed'] / MAX_FAN * 100) * c/100) + ' ' + c);
-  $('#stats .fan-2 .temp').text(Math.floor(data.fan['fan-1-speed']) + ' RPM');
+  for (var i = 0; i < data.fan['total-fans-in-system']; i++) {
+    $('#stats .fan-' + i + ' circle.bar').css('stroke-dasharray', Math.floor( (data.fan['fan-' + i + '-speed'] / MAX_FAN * 100) * c/100) + ' ' + c);
+    $('#stats .fan-' + i + ' .temp').text(Math.floor(data.fan['fan-' + i + '-speed']) + ' RPM');
+  }
 }
 
 ,renderChart: function(title, icon, percentage, temp) {
@@ -66,7 +67,7 @@ ui: {
       html +=         '<circle class="bar" r="' + r + '" cx="' + (this.ui.width/2) + '" cy="' + (this.ui.height/2) + '" '; 
       html +=                ' style="stroke: ' + this.ui.color + '; stroke-width: ' + this.ui.thickness + '; stroke-dasharray: ' + p + ' ' + c + '" />';
       html +=       '</svg>';
-      html +=       '<div class="temp" style="display:' + this.ui.displaylabel + '; font-size:' + this.ui.fontsize + 'rem">' + temp + '°C</div>';
+      html +=       '<div class="temp" style="display:' + this.ui.displaylabel + '; font-size:' + this.ui.fontsize + 'rem">' + temp + '</div>';
       html += '</div>'; 
   return html;
 }
