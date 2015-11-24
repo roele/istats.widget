@@ -1,0 +1,6 @@
+{
+  "name": "iStats Widget",
+  "description":"Widgets for the iStats Ruby gem to display SMC information about your system.",
+  "author": "Roland Schaer",
+  "email": "roele33@hotmail.com"
+}
