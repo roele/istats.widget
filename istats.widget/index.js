@@ -29,7 +29,11 @@ ui: {
   var data = this.parseOutput(output);
   var html  = '<div id="stats">';
       html += this.renderChart('CPU', 'icon-cpu', 100, 0);
-      html += this.renderChart('Battery', 'icon-carbattery', 100, 0);
+	  
+  if (data.battery) {
+	  html += this.renderChart('Battery', 'icon-carbattery', 100, 0);
+  }
+  
   for (var i = 0; i < data.fan['total-fans-in-system']; i++) {
       html += this.renderChart('Fan ' + i, 'icon-fan', 100, 0);
   }
