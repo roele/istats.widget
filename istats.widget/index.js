@@ -29,6 +29,11 @@ ui: {
   var data = this.parseOutput(output);
   var html  = '<div id="stats">';
       html += this.renderChart('CPU', 'icon-cpu', 100, 0);
+	  
+  if (data.battery) {
+	  html += this.renderChart('Battery', 'icon-carbattery', 100, 0);
+  }
+  
   for (var i = 0; i < data.fan['total-fans-in-system']; i++) {
       html += this.renderChart('Fan ' + i, 'icon-fan', 100, 0);
   }
@@ -46,6 +51,9 @@ ui: {
 
   $('#stats .cpu circle.bar').css('stroke-dasharray', Math.floor( (data.cpu['cpu-temp'] / MAX_CPU * 100) * c/100) + ' ' + c);
   $('#stats .cpu .temp').text(Math.floor(data.cpu['cpu-temp']) + '°C');
+  
+  $('#stats .battery circle.bar').css('stroke-dasharray', Math.floor( (data.battery['current-charge'] / data.battery['maximum-charge'] * 100) * c/100) + ' ' + c);
+  $('#stats .battery .temp').text(Math.floor((data.battery['current-charge'] / data.battery['maximum-charge'] * 100)) + '%');
 
   for (var i = 0; i < data.fan['total-fans-in-system']; i++) {
     $('#stats .fan-' + i + ' circle.bar').css('stroke-dasharray', Math.floor( (data.fan['fan-' + i + '-speed'] / MAX_FAN * 100) * c/100) + ' ' + c);
@@ -154,6 +162,9 @@ ui: {
                                                              \n\
   #stats .chart .icon-cpu:before                             \n\
     content: '\\f002'                                        \n\
+                                                             \n\
+  #stats .chart .icon-carbattery:before                      \n\
+    content: '\\f553'                                        \n\
                                                              \n\
   #stats .chart .icon-fan:before                             \n\
     content: '\\f66f'                                        \n\
