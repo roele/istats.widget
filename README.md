@@ -22,18 +22,17 @@ to install the gem.
 You can find basic options in the file `index.js` in the top section `ui`. Some tweaks will require you to make
 changes in the styles in the bottom section `style` of the file.
 
-* `top` Top position
-* `left` Left position
+* `top` or `bottom` Top or Bottom position in px
+* `left` or `right` Left or Right position in px
 * `color` Donut chart color
 * `bgcolor` Donut chart background color
-* `width` Donut chart width, should be same as `height`
-* `height` Donut chart height, should be same as `width`
-* `radius` Donut chart radius, needs to be smaller than `width`/`height`
-* `thickness` Donut chart line width
-* `iconsize` Font size of the icons in rem
-* `iconheight` Line height of the icon font in rem
-* `displaylabel` Label display property (e.g 'block' or 'none')
-* `fontsize` Font size of the labels in rem
+* `width` Donut chart width in px, should be same as `height`
+* `height` Donut chart height in px, should be same as `width`
+* `radius` Donut chart radius in px, needs to be smaller than `width`/`height`
+* `thickness` Donut chart line width in px
+* `iconsize` Font size of the icons in px
+* `iconheight` Line height of the icon font in px
+* `fontsize` Font size of the labels in px
 
 
 ## Credits
