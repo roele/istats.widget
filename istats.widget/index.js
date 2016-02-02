@@ -6,19 +6,46 @@
  *
  */
 
+/**
+ * Visual appearance configuration
+ */
 ui: {
-  top: '1rem',
-  left: '1rem',
+  /* Vertical position in PX, either top or bottom */
+  top: '0',
+
+  //bottom: '0',
+
+  /* Horizontal position in PX, either left or right */
+  left: '0',
+
+  //right: '0',
+
+  /* Stats color */
   color: '#fff',
+
+  /* Stats donut background color*/
   bgcolor: 'transparent',
+
+  /* Stats width in PX */
   width: 80,
+
+  /* Stats height in PX */
   height: 80,
+
+  /* Stats radius in PX, needs be be at leat (width/2 - thickness) */
   radius: 30,
+
+  /* Donut line thickness in PX */
   thickness: 8,
-  iconsize: 2,
-  iconheight: 4.825,
-  displaylabel: 'block',
-  fontsize: 0.825
+
+  /* Icon size in PX */
+  iconsize: 30,
+
+  /* Icon height in PX */
+  iconheight: 75,
+
+  /* Label font size in PX */
+  fontsize: 12
 }
 
 ,command: '/usr/local/bin/iStats'
@@ -27,7 +54,19 @@ ui: {
 
 ,render: function(output) {
   var data = this.parseOutput(output);
-  var html  = '<div id="stats">';
+  var html  = '<div id="stats" ';
+      html +=      'style="color: ' + this.ui.color + '; ';
+      if (this.ui.top) {
+        html +=           'top:' + this.ui.top + 'px; ';
+      } else if (this.ui.bottom) {
+        html +=           'bottom:' + this.ui.bottom + 'px; ';
+      }
+      if (this.ui.left) {
+        html +=           'left:' + this.ui.left + 'px; ';
+      } else if (this.ui.right) {
+        html +=           'right:' + this.ui.right + 'px; ';
+      }
+      html += '">';
       html += this.renderChart('CPU', 'icon-cpu', 100, 0);
 	  
   if (data.battery) {
@@ -66,16 +105,16 @@ ui: {
   var c = Math.floor(2 * Math.PI * this.ui.radius);
   var p = c / 100 * percentage;
 
-  var html  = '<div class="chart ' + title.replace(/\s/g, '-').toLowerCase() + '" ';
-      html +=      'style="top:' + this.ui.top + '; left:' + this.ui.left + '; color:' + this.ui.color + '">';
-      html +=       '<i class="icon ' + icon + '" style="font-size: ' + this.ui.iconsize + 'rem; line-height:' + this.ui.iconheight + 'rem"></i>';
+  var html  = '<div class="chart ' + title.replace(/\s/g, '-').toLowerCase() + '">';
+
+      html +=       '<i class="icon ' + icon + '" style="font-size: ' + this.ui.iconsize + 'px; line-height:' + this.ui.iconheight + 'px"></i>';
       html +=       '<svg width="' + this.ui.width + 'px" height="' + this.ui.height + 'px">';
       html +=         '<circle class="bg" r="' + r + '" cx="' + (this.ui.width/2) + '" cy="' + (this.ui.height/2) + '"';
       html +=                ' style="stroke: ' + this.ui.bgcolor + '; stroke-width: ' + this.ui.thickness + '; stroke-dasharray: ' + c + ' ' + c + '"/>';
       html +=         '<circle class="bar" r="' + r + '" cx="' + (this.ui.width/2) + '" cy="' + (this.ui.height/2) + '" '; 
       html +=                ' style="stroke: ' + this.ui.color + '; stroke-width: ' + this.ui.thickness + '; stroke-dasharray: ' + p + ' ' + c + '" />';
       html +=       '</svg>';
-      html +=       '<div class="temp" style="display:' + this.ui.displaylabel + '; font-size:' + this.ui.fontsize + 'rem">' + temp + '</div>';
+      html +=       '<div class="temp" style="font-size:' + this.ui.fontsize + 'px">' + temp + '</div>';
       html += '</div>'; 
   return html;
 }
@@ -117,8 +156,9 @@ ui: {
 
 ,style: "                                                    \n\
   font-family: 'Helvetica Neue'                              \n\
-  font-size: 0.75rem                                         \n\
-  width: auto;                                               \n\
+  font-size: 16px                                            \n\
+  width: 100%                                                \n\
+  height: 100%                                               \n\
   transform: auto;                                           \n\
                                                              \n\
   @font-face                                                 \n\
@@ -135,24 +175,23 @@ ui: {
     font-style: normal                                       \n\
                                                              \n\
   #stats                                                     \n\
-    margin: 0px 0px                                          \n\
-    padding: 0px 0px                                         \n\
+    position: absolute                                       \n\
+    margin: 0 0                                              \n\
+    padding: 0 0                                             \n\
                                                              \n\
   #stats .chart                                              \n\
     position: relative                                       \n\
     float: left                                              \n\
-    margin: 0rem 1rem                                        \n\
+    margin: 0rem 1rem 0rem 1rem                              \n\
                                                              \n\
   #stats .chart i                                            \n\
-    font-size: 1rem                                          \n\
     text-align: center                                       \n\
     position: absolute                                       \n\
-    line-height: 2.5rem                                      \n\
     width: 100%                                              \n\
                                                              \n\
   #stats .chart .temp                                        \n\
     text-align: center                                       \n\
-    font-size: 1rem                                          \n\
+    display: block                                           \n\
                                                              \n\
   #stats .chart svg                                          \n\
     transform: rotate(-90deg)                                \n\
