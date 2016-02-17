@@ -48,7 +48,7 @@ ui: {
   fontsize: 12
 }
 
-,command: '/usr/local/bin/iStats'
+,command: 'istats.widget/istats.sh'
 
 ,refreshFrequency: 3000
 
@@ -56,27 +56,33 @@ ui: {
   var data = this.parseOutput(output);
   var html  = '<div id="stats" ';
       html +=      'style="color: ' + this.ui.color + '; ';
-      if (this.ui.top) {
-        html +=           'top:' + this.ui.top + 'px; ';
-      } else if (this.ui.bottom) {
-        html +=           'bottom:' + this.ui.bottom + 'px; ';
-      }
-      if (this.ui.left) {
-        html +=           'left:' + this.ui.left + 'px; ';
-      } else if (this.ui.right) {
-        html +=           'right:' + this.ui.right + 'px; ';
-      }
-      html += '">';
+  if (this.ui.top) {
+      html +=           'top:' + this.ui.top + 'px; ';
+  } else if (this.ui.bottom) {
+      html +=           'bottom:' + this.ui.bottom + 'px; ';
+  }
+  if (this.ui.left) {
+      html +=           'left:' + this.ui.left + 'px; ';
+  } else if (this.ui.right) {
+      html +=           'right:' + this.ui.right + 'px; ';
+  }
+  html += '">';
+
+  if (data.cpu) {
       html += this.renderChart('CPU', 'icon-cpu', 100, 0);
-	  
+  }
+
   if (data.battery) {
-	  html += this.renderChart('Battery', 'icon-carbattery', 100, 0);
+      html += this.renderChart('Battery', 'icon-carbattery', 100, 0);
   }
   
-  for (var i = 0; i < data.fan['total-fans-in-system']; i++) {
+  if (data.fan) {
+    for (var i = 0; i < data.fan['total-fans-in-system']; i++) {
       html += this.renderChart('Fan ' + i, 'icon-fan', 100, 0);
+    }
   }
-      html +=  '</div>';
+  html +=  '</div>';
+
   return html;
 }
 
@@ -88,15 +94,21 @@ ui: {
   var data = this.parseOutput(output);
   var c = Math.floor(2 * Math.PI * this.ui.radius);
 
-  $('#stats .cpu circle.bar').css('stroke-dasharray', Math.floor( (data.cpu['cpu-temp'] / MAX_CPU * 100) * c/100) + ' ' + c);
-  $('#stats .cpu .temp').text(Math.floor(data.cpu['cpu-temp']) + '°C');
+  if (data.cpu) {
+    $('#stats .cpu circle.bar').css('stroke-dasharray', Math.floor( (data.cpu['cpu-temp'] / MAX_CPU * 100) * c/100) + ' ' + c);
+    $('#stats .cpu .temp').text(Math.floor(data.cpu['cpu-temp']) + '°C');
+  }
   
-  $('#stats .battery circle.bar').css('stroke-dasharray', Math.floor( (data.battery['current-charge'] / data.battery['maximum-charge'] * 100) * c/100) + ' ' + c);
-  $('#stats .battery .temp').text(Math.floor((data.battery['current-charge'] / data.battery['maximum-charge'] * 100)) + '%');
+  if (data.battery) {
+    $('#stats .battery circle.bar').css('stroke-dasharray', Math.floor( (data.battery['current-charge'] / data.battery['maximum-charge'] * 100) * c/100) + ' ' + c);
+    $('#stats .battery .temp').text(Math.floor((data.battery['current-charge'] / data.battery['maximum-charge'] * 100)) + '%');
+  }
 
-  for (var i = 0; i < data.fan['total-fans-in-system']; i++) {
-    $('#stats .fan-' + i + ' circle.bar').css('stroke-dasharray', Math.floor( (data.fan['fan-' + i + '-speed'] / MAX_FAN * 100) * c/100) + ' ' + c);
-    $('#stats .fan-' + i + ' .temp').text(Math.floor(data.fan['fan-' + i + '-speed']) + ' RPM');
+  if (data.fan) {
+    for (var i = 0; i < data.fan['total-fans-in-system']; i++) {
+      $('#stats .fan-' + i + ' circle.bar').css('stroke-dasharray', Math.floor( (data.fan['fan-' + i + '-speed'] / MAX_FAN * 100) * c/100) + ' ' + c);
+      $('#stats .fan-' + i + ' .temp').text(Math.floor(data.fan['fan-' + i + '-speed']) + ' RPM');
+    }
   }
 }
 
@@ -106,7 +118,6 @@ ui: {
   var p = c / 100 * percentage;
 
   var html  = '<div class="chart ' + title.replace(/\s/g, '-').toLowerCase() + '">';
-
       html +=       '<i class="icon ' + icon + '" style="font-size: ' + this.ui.iconsize + 'px; line-height:' + this.ui.iconheight + 'px"></i>';
       html +=       '<svg width="' + this.ui.width + 'px" height="' + this.ui.height + 'px">';
       html +=         '<circle class="bg" r="' + r + '" cx="' + (this.ui.width/2) + '" cy="' + (this.ui.height/2) + '"';
@@ -137,6 +148,9 @@ ui: {
     var e = line.split(':');
     var k = e.length > 0 ? e[0].toLowerCase().replace(/\s/g, '-') : null;
     var v = e.length > 1 ? e[1].replace(/.*?(\d+)(\.\d{0,1})*.*/, '$1$2') : null;
+    if (v === null) {
+      continue;
+    }
     if (section === 'CPU Stats') {
       o.cpu = o.cpu || {};
       o.cpu[k] = v; 

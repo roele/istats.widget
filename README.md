@@ -8,12 +8,13 @@ Uses the [iStats Ruby Gem](https://github.com/Chris911/iStats "iStats") to obtai
 
 ## Requirements
 
-As already mentioned the widget requires the installation of a Ruby Gem to work. Follow the following steps
-to install the gem.
+The widget requires the installation of a Ruby Gem to work. Installation of the Gem requires
+XCode Command Line Tools installed. Follow the steps to install the gem.
 
 1. Open the Terminal.app
+2. Issue the command `xcode-select --install`
 2. Issue the command `sudo gem install iStats`
-3. Issue the command `istats` and check for the output.
+3. Issue the command `$(which istats)` and check for the output.
 3. Done.
 
 
