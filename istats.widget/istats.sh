@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
 #
-# System-wide .profile for sh(1)
+# Execute bash profile
 #
-if [ -x /usr/libexec/path_helper ]; then
-    eval `/usr/libexec/path_helper -s`
-fi
-
-if [ "${BASH-no}" != "no" ]; then
-    [ -r /etc/bashrc ] && . /etc/bashrc
+if [ -f ~/.bash_profile ]; then
+    source ~/.bash_profile
+elif [ -f ~/.bash_login ]; then
+    source ~/.bash_login
+elif [ -f ~/.profile ]; then
+    source ~/.profile
 fi
 
 #

@@ -13,9 +13,9 @@ XCode Command Line Tools installed. Follow the steps to install the gem.
 
 1. Open the Terminal.app
 2. Issue the command `xcode-select --install`
-2. Issue the command `sudo gem install iStats`
-3. Issue the command `$(which istats)` and check for the output.
-3. Done.
+3. Issue the command `sudo gem install iStats`
+4. Issue the command `$(which istats)` and check for the output.
+5. Done.
 
 
 ## Appearance & Options
