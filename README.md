@@ -23,6 +23,7 @@ XCode Command Line Tools installed. Follow the steps to install the gem.
 You can find basic options in the file `index.js` in the top section `ui`. Some tweaks will require you to make
 changes in the styles in the bottom section `style` of the file.
 
+* `unit` Temperature unit, either C or F
 * `top` or `bottom` Top or Bottom position in px
 * `left` or `right` Left or Right position in px
 * `color` Donut chart color
