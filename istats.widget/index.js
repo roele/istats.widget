@@ -10,6 +10,9 @@
  * Visual appearance configuration
  */
 ui: {
+  /* Temperature unit, either C or F */
+  unit: 'C',
+
   /* Vertical position in PX, either top or bottom */
   top: '0',
 
@@ -75,7 +78,7 @@ ui: {
   if (data.battery) {
       html += this.renderChart('Battery', 'icon-carbattery', 100, 0);
   }
-  
+
   if (data.fan) {
     for (var i = 0; i < data.fan['total-fans-in-system']; i++) {
       html += this.renderChart('Fan ' + i, 'icon-fan', 100, 0);
@@ -95,10 +98,14 @@ ui: {
   var c = Math.floor(2 * Math.PI * this.ui.radius);
 
   if (data.cpu) {
+    var temperature = (this.ui.unit.toUpperCase() === 'C')
+                        ? Math.floor(data.cpu['cpu-temp']) + '°C'
+                        : Math.floor(data.cpu['cpu-temp'] * 1.8 + 32) + '°F';
+
     $('#stats .cpu circle.bar').css('stroke-dasharray', Math.floor( (data.cpu['cpu-temp'] / MAX_CPU * 100) * c/100) + ' ' + c);
-    $('#stats .cpu .temp').text(Math.floor(data.cpu['cpu-temp']) + '°C');
+    $('#stats .cpu .temp').text(temperature);
   }
-  
+
   if (data.battery) {
     $('#stats .battery circle.bar').css('stroke-dasharray', Math.floor( (data.battery['current-charge'] / data.battery['maximum-charge'] * 100) * c/100) + ' ' + c);
     $('#stats .battery .temp').text(Math.floor((data.battery['current-charge'] / data.battery['maximum-charge'] * 100)) + '%');
@@ -122,11 +129,11 @@ ui: {
       html +=       '<svg width="' + this.ui.width + 'px" height="' + this.ui.height + 'px">';
       html +=         '<circle class="bg" r="' + r + '" cx="' + (this.ui.width/2) + '" cy="' + (this.ui.height/2) + '"';
       html +=                ' style="stroke: ' + this.ui.bgcolor + '; stroke-width: ' + this.ui.thickness + '; stroke-dasharray: ' + c + ' ' + c + '"/>';
-      html +=         '<circle class="bar" r="' + r + '" cx="' + (this.ui.width/2) + '" cy="' + (this.ui.height/2) + '" '; 
+      html +=         '<circle class="bar" r="' + r + '" cx="' + (this.ui.width/2) + '" cy="' + (this.ui.height/2) + '" ';
       html +=                ' style="stroke: ' + this.ui.color + '; stroke-width: ' + this.ui.thickness + '; stroke-dasharray: ' + p + ' ' + c + '" />';
       html +=       '</svg>';
       html +=       '<div class="temp" style="font-size:' + this.ui.fontsize + 'px">' + temp + '</div>';
-      html += '</div>'; 
+      html += '</div>';
   return html;
 }
 
@@ -153,7 +160,7 @@ ui: {
     }
     if (section === 'CPU Stats') {
       o.cpu = o.cpu || {};
-      o.cpu[k] = v; 
+      o.cpu[k] = v;
     }
     if (section === 'Fan Stats') {
       o.fan = o.fan || {};
@@ -164,7 +171,7 @@ ui: {
       o.battery[k] = v;
     }
   }
-  
+
   return o;
 }
 
