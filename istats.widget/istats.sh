@@ -14,9 +14,9 @@ fi
 #
 # Execute iStats command
 # 
-if [ -n "$(which iStats)" ]; then
+if [ -n "$(which istats)" ]; then
     # define command
-    command=( "$(which iStats)" )
+    command=( "$(which istats)" )
 
     # execute
     "${command[@]}"
