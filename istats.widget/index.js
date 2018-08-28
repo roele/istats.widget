@@ -14,7 +14,7 @@ ui: {
   unit: 'C',
 
   /* Vertical position in PX, either top or bottom */
-  top: '0',
+  top: '20',
 
   //bottom: '0',
 
@@ -24,31 +24,31 @@ ui: {
   //right: '0',
 
   /* Stats color */
-  color: '#fff',
+  color: '#666',
 
   /* Stats donut background color*/
   bgcolor: 'transparent',
 
   /* Stats width in PX */
-  width: 80,
+  width: 74,
 
   /* Stats height in PX */
-  height: 80,
+  height: 40,
 
   /* Stats radius in PX, needs be be at leat (width/2 - thickness) */
-  radius: 30,
+  radius: 18,
 
   /* Donut line thickness in PX */
-  thickness: 8,
+  thickness: 2,
 
   /* Icon size in PX */
-  iconsize: 30,
+  iconsize: 18,
 
   /* Icon height in PX */
-  iconheight: 75,
+  iconheight: 40,
 
   /* Label font size in PX */
-  fontsize: 12
+  fontsize: 10
 }
 
 /**
@@ -220,7 +220,7 @@ ui: {
   #stats .chart                                              \n\
     position: relative                                       \n\
     float: left                                              \n\
-    margin: 0rem 1rem 0rem 1rem                              \n\
+    margin: 0rem 0rem 0rem 0rem                              \n\
                                                              \n\
   #stats .chart i                                            \n\
     text-align: center                                       \n\
