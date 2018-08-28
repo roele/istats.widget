@@ -116,8 +116,11 @@ ui: {
   }
 
   if (data.battery) {
-    $('#stats .battery circle.bar').css('stroke-dasharray', Math.floor( (data.battery['current-charge'] / data.battery['maximum-charge'] * 100) * c/100) + ' ' + c);
-    $('#stats .battery .temp').text(Math.floor((data.battery['current-charge'] / data.battery['maximum-charge'] * 100)) + '%');
+      var cur = data.battery['current-charge'][0];
+      var max = data.battery['maximum-charge'][0];
+      var percentage = data.battery['current-charge'][1] || Math.floor(cur / max * 100);
+      $('#stats .battery circle.bar').css('stroke-dasharray', Math.floor( percentage * c/100) + ' ' + c);
+      $('#stats .battery .temp').text(percentage + '%');
   }
 
   if (data.fan) {
@@ -164,6 +167,8 @@ ui: {
     var e = line.split(':');
     var k = e.length > 0 ? e[0].toLowerCase().replace(/\s/g, '-') : null;
     var v = e.length > 1 ? e[1].replace(/.*?(\d+)(\.\d{0,1})*.*/, '$1$2') : null;
+    var p = e.length > 1 ? e[1].replace(/.*?\s+(\d{1,3})(\.\d{1})?\%.*/, '$1$2') : null;
+
     if (v === null) {
       continue;
     }
@@ -177,7 +182,10 @@ ui: {
     }
     if (section == 'Battery Stats') {
       o.battery = o.battery || {};
-      o.battery[k] = v;
+      o.battery[k] = [v];
+      if (!Number.isNaN(p)) {
+          o.battery[k].push(Number.parseFloat(p));
+      }
     }
   }
 
