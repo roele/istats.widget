@@ -37,6 +37,13 @@ changes in the styles in the bottom section `style` of the file.
 * `fontsize` Font size of the labels in px
 
 
+## Troubleshooting
+
+* **The widget does not work and/or shows nothing**  
+    * Verify the location of your istats binary by issuing `which istats` in your shell and adapt the `command` property in the `index.js` accordingly.
+    * Open `Show Debug Console` to verify is there are errors shown in the `Console` tab. If so please report an issue to https://github.com/roele/istats.widget/issues with the error details.
+
+
 ## Credits
 
 Icons by [WebHostingHub](http://www.webhostinghub.com/glyphs/)

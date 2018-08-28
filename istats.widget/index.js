@@ -51,9 +51,18 @@ ui: {
   fontsize: 12
 }
 
-,command: 'istats.widget/istats.sh'
+/**
+ * Path to istats binary.
+ *
+ * In case you use rvm or rbenv your istats binary might be
+ * located somewhere else and this value needs modification.
+ *
+ * Try the following in your command line
+ * $ which istats
+ */
+,command: '/usr/local/bin/istats'
 
-,refreshFrequency: 3000
+,refreshFrequency: 5000
 
 ,render: function(output) {
   var data = this.parseOutput(output);
