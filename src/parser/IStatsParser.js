@@ -88,7 +88,7 @@ export default class IStatsParser {
           }
 
           if (section === 'CPU Stats') {
-            addSection(o,'cpu',data);
+            addSection(o, 'cpu', data);
           }
 
           if (section === 'Fan Stats') {
