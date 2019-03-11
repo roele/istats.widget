@@ -45,11 +45,11 @@ jobs:
       # Run tests
       - run:
           name: test
-          command: npm test
+          command: npm run test
 
       # Run code coverage report
       - run:
           name: code-coverage
-          command: npm code:coverage
+          command: npm run code:coverage
       - store_artifacts: # for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
           path: coverage
