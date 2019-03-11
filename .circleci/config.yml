@@ -28,7 +28,7 @@ jobs:
 
       # Install dependencies
       - run:
-          name: npm-install
+          name: Install dependencies
           command: npm install
 
       # Download and cache dependencies
@@ -45,7 +45,7 @@ jobs:
 
       # Run tests
       - run:
-          name: test
+          name: Run unit tests
           command: ./node_modules/.bin/jest --ci --runInBand --reporters=default --reporters=jest-junit
           environment:
             JEST_JUNIT_OUTPUT: "reports/junit/test-results.xml"
@@ -56,7 +56,7 @@ jobs:
 
       # Run code coverage report
       - run:
-          name: code-coverage
+          name: Run code coverage report
           command: ./node_modules/.bin/jest --collectCoverage=true
 
       # Store artifacts
