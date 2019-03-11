@@ -1,14 +1,16 @@
 module.exports = {
 
-    collectCoverage: true,
+    collectCoverage: false,
 
-    reporters: ["default","jest-junit"],
+    coverageDirectory: './reports/coverage',
+
+    reporters: ['default','jest-junit'],
 
     testPathIgnorePatterns: [
         // Default value
-        "/node_modules/",
+        '/node_modules/',
         // Exclude test resource files
-        "\\.res\\.[jt]sx?$"
+        '\\.res\\.[jt]sx?$'
     ]
 
 };

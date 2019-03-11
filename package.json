@@ -25,7 +25,7 @@
     "pretest": "npm run lint",
     "test": "jest",
     "code:coverage": "jest --coverage",
-    "clean": "rm -rf istats.widget.zip coverage dist reports",
+    "clean": "rm -rf istats.widget.zip dist reports",
     "prebuild": "npm run clean && npm run test",
     "build": "mkdir -p dist && rsync -R index.jsx src/**/* dist --exclude **/__test__/**",
     "prezip": "npm run build",

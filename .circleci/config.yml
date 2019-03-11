@@ -26,6 +26,23 @@ jobs:
       # Checkout repository to working directory
       - checkout
 
+      # Install dependencies
+      - run:
+          name: npm-install
+          command: npm install
+
+      # Run tests
+      - run:
+          name: test
+          command: ./node_modules/.bin/jest --ci --runInBand --reporters=default --reporters=jest-junit
+          environment:
+            JEST_JUNIT_OUTPUT: "reports/junit/test-results.xml"
+
+      # Run code coverage report
+      - run:
+          name: code-coverage
+          command: ./node_modules/.bin/jest --collectCoverage=true
+
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -33,29 +50,14 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
-      # Install dependencies
-      - run:
-          name: npm-install
-          command: npm install
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      # Run tests
-      - run:
-          name: test
-          command: jest -- --ci --runInBand --reporters=default --reporters=jest-junit
-          environment:
-            JEST_JUNIT_OUTPUT: "reports/junit/test-results.xml"
+      # Store artifacts and test results
+      - store_artifacts:
+          path: reports
+
       - store_test_results:
           path: reports/junit
-      - store_artifacts:
-          path: reports/junit
-
-      # Run code coverage report
-      - run:
-          name: code-coverage
-          command: jest --collectCoverage=true
-      - store_artifacts:
-          path: coverage
