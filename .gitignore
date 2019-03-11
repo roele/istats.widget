@@ -38,6 +38,9 @@ coverage
 build
 dist
 
+# Jest JUnit reports
+reports
+
 # Dependency directories
 node_modules/
 

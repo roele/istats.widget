@@ -45,11 +45,17 @@ jobs:
       # Run tests
       - run:
           name: test
-          command: npm run test
+          command: jest -- --ci --runInBand --reporters=default --reporters=jest-junit
+          environment:
+            JEST_JUNIT_OUTPUT: "reports/junit/test-results.xml"
+      - store_test_results:
+          path: reports/junit
+      - store_artifacts:
+          path: reports/junit
 
       # Run code coverage report
       - run:
           name: code-coverage
-          command: npm run code:coverage
-      - store_artifacts: # for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
+          command: jest --collectCoverage=true
+      - store_artifacts:
           path: coverage
