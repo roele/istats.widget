@@ -16,6 +16,12 @@ jobs:
 
     working_directory: ~/repo
 
+    jobs:
+      build:
+        branches:
+          ignore:
+            develop
+
     steps:
       # Checkout repository to working directory
       - checkout
