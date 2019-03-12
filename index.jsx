@@ -18,7 +18,6 @@
  */
 
 import React from 'react';
-import { css } from 'uebersicht';
 
 //import './index.css';
 
@@ -27,64 +26,28 @@ import IStatsParser from './src/parser/IStatsParser.js';
 //import Stat from './src/components/Stat.jsx';
 //import Error from './src/components/Error.jsx';
 
+const cfg = {
+    color: '#666',
+    width: '74',
+    height: '40',
+    radius: '18',
+    strokeWidth: '2'
+};
+
 export const command = '/usr/local/bin/istats';
+
 export const refreshFrequency = 5000;
 
 export const className = `
     font-family: 'Helvetica Neue';
     font-size: 16px;
+    color: ${cfg.color};
     width: 100%;
     height: 100%;
 
     top: 20px;
     left: 20px;
 `;
-
-const stat = css({
-    'position': 'relative',
-    'float': 'left',
-    'margin': '0rem 0rem 0rem 0rem',
-    'i': {
-        'text-align': 'center',
-        'position': 'absolute',
-        'width': '100%'
-    },
-    '.temp': {
-        'text-align': 'center',
-        'display': 'block'
-    },
-    'svg': {
-        'transform': 'rotate(-90deg)'
-    },
-    'circle': {
-        'fill': 'transparent'
-    }
-});
-
-const icon = css({
-    'font-family': 'Icons',
-    'background': 'none',
-    'width': 'auto',
-    'height': 'auto',
-    'font-style': 'normal',
-
-    '.icon-cpu:before': {
-        'content': '"\\f002"'
-    },
-    '.icon-carbattery:before': {
-        'content': '"\\f553"'
-    },
-    '.icon-fan:before': {
-        'content': '"\\f66f"'
-    }
-});
-
-const cfg = {
-    width: '74',
-    height: '40',
-    radius: '18'
-};
-
 
 const MAX_CPU_TEMP = 90,
       MAX_FAN_SPEED = 5000;
@@ -102,38 +65,48 @@ const renderError = (error) => {
 }
 
 const renderStat = (title, iconName, percentage, value) => {
-    //const statClass = 'stat ' + title.replace(/\s/g, '-').toLowerCase(),
-    //      iconClass = 'icon ' + iconName
-    //      ;
-
     const c = Math.floor(2 * Math.PI * cfg.radius);
     const p = c / 100 * percentage;
 
     return (
-        <div className={stat}>
-            <i className={icon}></i>
+        <div className="stat">
+            <i className={"icon " + iconName}></i>
             <svg width={cfg.width} height={cfg.height}>
                 <circle r={cfg.radius} cx={cfg.width/2} cy={cfg.height/2}
-                        style={{stroke: 'transparent', strokeWidth: 2, strokeDasharray: c + ' ' + c}} />;
+                        style={{stroke: 'transparent', strokeWidth: cfg.strokeWidth, strokeDasharray: c + ' ' + c}} />;
                 <circle r={cfg.radius} cx={cfg.width/2} cy={cfg.height/2}
-                        style={{stroke: '#666', strokeWidth: 2, strokeDasharray: p + ' ' + c}} />;
+                        style={{stroke: cfg.color, strokeWidth: cfg.strokeWidth, strokeDasharray: p + ' ' + c}} />;
             </svg>
             <div className="temp" style={{fontSize: '10px'}}>{value}</div>
         </div>
-    )
+    );
 }
 
-const getIcon = (prop) => {
-    switch (prop) {
-        case 'cpu':
-            return 'icon-cpu';
-        case 'fan':
-            return 'icon-fan';
-        case 'battery':
-            return 'icon-carbattery';
-        default:
-            return '';
+const getIcon = (data,prop) => {
+    if (prop === 'cpu') {
+        return 'icon-cpu';
+    } else if (prop ===  'fan') {
+        return 'icon-fan';
+    } else if (prop === 'battery') {
+        let p = getPercentage(data,prop);
+        if (p > 80) {
+            return 'icon-batteryfull'
+        }
+        if (p > 60) {
+            return 'icon-batteryeighty';
+        }
+        if (p > 40) {
+            return 'icon-batterysixty';
+        }
+        if (p > 20) {
+            return 'icon-batteryforty';
+        }
+        if (p > 10) {
+            return 'icon-batterytwenty';
+        }
+        return 'icon-batteryempty';
     }
+    return '';
 }
 
 // TODO support multi-values
@@ -169,15 +142,18 @@ const renderStats = (output) => {
     const data = IStatsParser.parse(output),
           stats = Object.keys(data).map(prop => {
               return renderStat(
-                  prop, getIcon(prop),
+                  prop, getIcon(data,prop),
                   getPercentage(data,prop),
                   getValue(data,prop)
               );
           });
 
     return (
-        <div>{stats}</div>
-    )
+        <div>
+            <link rel="stylesheet" type="text/css" href="index.css"></link> 
+            {stats}
+        </div>
+    );
 
     //const data = parseOutput(output);
     //return (
