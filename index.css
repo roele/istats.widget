@@ -5,18 +5,12 @@
   font-style: normal;
 }
 
-[class^='icon-'], [class*=' icon-'] {
-  font-family: 'Icons';
-  background: none;
-  width: auto;
-  height: auto;
-  font-style: normal;
+.stats {
+    display: flex;
 }
 
 .stat {
   position: relative;
-  float: left;
-  margin: 0rem 0rem 0rem 0rem;
 }
 
 .stat i {
@@ -26,7 +20,7 @@
   line-height: 2.5rem;
 }
 
-.stat .temp {
+.stat .text {
   text-align: center;
   display: block;
 }
@@ -39,27 +33,35 @@
   fill: transparent;
 }
 
-.stat .icon-cpu:before {
+[class^='icon-'], [class*=' icon-'] {
+  font-family: 'Icons';
+  background: none;
+  width: auto;
+  height: auto;
+  font-style: normal;
+}
+
+.icon-cpu:before {
   content: '\f002';
 }
 
-.stat .icon-batteryfull:before {
+.icon-batteryfull:before {
   content: '\f0fa';
 }
 
-.stat .icon-batteryeighty:before {
+.icon-batteryeighty:before {
   content: '\f0f9';
 }
 
-.stat .icon-batterysixty:before {
+.icon-batterysixty:before {
   content: '\f0f8';
 }
 
-.stat .icon-batteryforty:before {
+.icon-batteryforty:before {
   content: '\f0f7';
 }
 
-.stat .icon-batterytwenty:before {
+.icon-batterytwenty:before {
   content: '\f0f6';
 }
 
@@ -67,6 +69,6 @@
   content: '\f0f5';
 }
 
-.stat .icon-fan:before {
+.icon-fan:before {
   content: '\f66f';
 }

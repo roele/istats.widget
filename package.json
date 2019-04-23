@@ -27,7 +27,7 @@
     "code:coverage": "jest --coverage",
     "clean": "rm -rf istats.widget.zip dist reports",
     "prebuild": "npm run clean && npm run test",
-    "build": "mkdir -p dist && rsync -R index.jsx src/**/* dist --exclude **/__test__/**",
+    "build": "mkdir -p dist && rsync -R index.jsx index.css icons.ttf src/**/* dist --exclude **/__test__/**",
     "prezip": "npm run build",
     "zip": "zip -r istats.widget.zip dist -i@include.lst -x@exclude.lst -X"
   },
@@ -35,12 +35,12 @@
     "babel-eslint": "^10.0.1",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
-    "eslint": "^5.15.1",
+    "eslint": "^5.16.0",
     "eslint-plugin-react": "^7.12.4",
     "eslint-plugin-sonarjs": "^0.3.0",
-    "jest": "^24.3.1",
+    "jest": "^24.7.1",
     "jest-junit": "^6.3.0",
-    "react": "^16.5.2"
+    "react": "^16.8.6"
   },
   "jest-junit": {
     "outputDirectory": "./reports/junit",

@@ -27,11 +27,14 @@ import IStatsParser from './src/parser/IStatsParser.js';
 //import Error from './src/components/Error.jsx';
 
 const cfg = {
+    top: '20px',
+    left: '20px',
     color: '#666',
     width: '74',
     height: '40',
     radius: '18',
-    strokeWidth: '2'
+    strokeWidth: '2',
+    fontSize: '10px'
 };
 
 export const command = '/usr/local/bin/istats';
@@ -39,14 +42,13 @@ export const command = '/usr/local/bin/istats';
 export const refreshFrequency = 5000;
 
 export const className = `
+    width: 100%;
+    height: 100%;
     font-family: 'Helvetica Neue';
     font-size: 16px;
     color: ${cfg.color};
-    width: 100%;
-    height: 100%;
-
-    top: 20px;
-    left: 20px;
+    top: ${cfg.top};
+    left: ${cfg.left};
 `;
 
 const MAX_CPU_TEMP = 90,
@@ -68,16 +70,21 @@ const renderStat = (title, iconName, percentage, value) => {
     const c = Math.floor(2 * Math.PI * cfg.radius);
     const p = c / 100 * percentage;
 
+    // 90deg --> cx = y, cy = x
+    // cx = width / 2
+    // cy = height / 2
+    // radius = r - stroke-width / 2
+
     return (
         <div className="stat">
             <i className={"icon " + iconName}></i>
             <svg width={cfg.width} height={cfg.height}>
-                <circle r={cfg.radius} cx={cfg.width/2} cy={cfg.height/2}
+                <circle r={cfg.radius-(cfg.strokeWidth/2)} cx={cfg.width/2} cy={cfg.height/2}
                         style={{stroke: 'transparent', strokeWidth: cfg.strokeWidth, strokeDasharray: c + ' ' + c}} />;
-                <circle r={cfg.radius} cx={cfg.width/2} cy={cfg.height/2}
+                <circle r={cfg.radius-(cfg.strokeWidth/2)} cx={cfg.width/2} cy={cfg.height/2}
                         style={{stroke: cfg.color, strokeWidth: cfg.strokeWidth, strokeDasharray: p + ' ' + c}} />;
             </svg>
-            <div className="temp" style={{fontSize: '10px'}}>{value}</div>
+            <div className="text" style={{fontSize: cfg.fontSize}}>{value}</div>
         </div>
     );
 }
@@ -88,23 +95,18 @@ const getIcon = (data,prop) => {
     } else if (prop ===  'fan') {
         return 'icon-fan';
     } else if (prop === 'battery') {
-        let p = getPercentage(data,prop);
-        if (p > 80) {
-            return 'icon-batteryfull'
-        }
-        if (p > 60) {
-            return 'icon-batteryeighty';
-        }
-        if (p > 40) {
-            return 'icon-batterysixty';
-        }
-        if (p > 20) {
-            return 'icon-batteryforty';
-        }
-        if (p > 10) {
-            return 'icon-batterytwenty';
-        }
-        return 'icon-batteryempty';
+        let percentage = getPercentage(data,prop);
+        let icon = [
+            {value:80,name:'full'},
+            {value:60,name:'eighty'},
+            {value:40,name:'sixty'},
+            {value:20,name:'forty'},
+            {value:10,name:'twenty'},
+            {value: 0,name:'empty'}
+        ].find(element => {
+            return percentage > element.value;
+        });
+        return 'icon-battery' + (icon && icon.name || 'empty');
     }
     return '';
 }
@@ -149,8 +151,8 @@ const renderStats = (output) => {
           });
 
     return (
-        <div>
-            <link rel="stylesheet" type="text/css" href="index.css"></link> 
+        <div className="stats">
+            <link rel="stylesheet" type="text/css" href="index.css"></link>
             {stats}
         </div>
     );
