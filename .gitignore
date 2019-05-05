@@ -37,6 +37,7 @@ coverage
 # Compiled binary addons (https://nodejs.org/api/addons.html)
 build
 dist
+istats.widget
 
 # Jest JUnit reports
 reports
