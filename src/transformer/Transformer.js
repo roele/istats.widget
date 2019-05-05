@@ -60,7 +60,8 @@ const handleKey = (input, output, key) => {
         let output = {};
         Object.keys(input).forEach(key => {
             if (!handleKey(input, output, key)) {
-                output[key] = input[key];
+                // copy original value
+                output[key] = JSON.parse(JSON.stringify(input[key]));
             }
         });
         return output;
