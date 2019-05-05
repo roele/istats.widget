@@ -17,24 +17,36 @@
  * limitations under the License.
  */
 
+ //TODO: uncomment once übersicht supports importing react
 import React from 'react';
 
+//TODO: unsupported, hence the <link> in {@link #renderStats}
 //import './index.css';
 
 import IStatsParser from './src/parser/IStatsParser.js';
+import Transformer from './src/transformer/Transformer.js';
 
+//TODO: modularize once übersicht supports importing react
 //import Stat from './src/components/Stat.jsx';
 //import Error from './src/components/Error.jsx';
 
 const cfg = {
-    top: '20px',
-    left: '20px',
+    /* Temperature unit [CF] */
+    tempUnit: 'C',
+    /* Position */
+    top: '320px',
+    left: '10px',
     color: '#666',
+    /* Chart */
     width: '74',
     height: '40',
     radius: '18',
     strokeWidth: '2',
-    fontSize: '10px'
+    /* Icon */
+    iconSize: '1.0rem',
+    iconLineHeight: '2.5rem',
+    /* Label */
+    labelSize: '0.625rem'
 };
 
 export const command = '/usr/local/bin/istats';
@@ -61,6 +73,7 @@ const renderError = (error) => {
         </div>
     );
 
+    //TODO: modularize once übersicht supports importing react
     //return (
     //    <Error />
     //);
@@ -70,6 +83,8 @@ const renderStat = (title, iconName, percentage, value) => {
     const c = Math.floor(2 * Math.PI * cfg.radius);
     const p = c / 100 * percentage;
 
+    //TODO: Configure things around radius
+    // Charts are rotated 90°, so cx = y and cy = x
     // 90deg --> cx = y, cy = x
     // cx = width / 2
     // cy = height / 2
@@ -77,32 +92,32 @@ const renderStat = (title, iconName, percentage, value) => {
 
     return (
         <div className="stat">
-            <i className={"icon " + iconName}></i>
+            <i className={"icon " + iconName} style={{ fontSize: cfg.iconSize, lineHeight: cfg.iconLineHeight }}></i>
             <svg width={cfg.width} height={cfg.height}>
-                <circle r={cfg.radius-(cfg.strokeWidth/2)} cx={cfg.width/2} cy={cfg.height/2}
-                        style={{stroke: 'transparent', strokeWidth: cfg.strokeWidth, strokeDasharray: c + ' ' + c}} />;
-                <circle r={cfg.radius-(cfg.strokeWidth/2)} cx={cfg.width/2} cy={cfg.height/2}
-                        style={{stroke: cfg.color, strokeWidth: cfg.strokeWidth, strokeDasharray: p + ' ' + c}} />;
+                <circle r={cfg.radius - (cfg.strokeWidth / 2)} cx={cfg.width / 2} cy={cfg.height / 2}
+                    style={{ stroke: 'transparent', strokeWidth: cfg.strokeWidth, strokeDasharray: c + ' ' + c }} />;
+                <circle r={cfg.radius - (cfg.strokeWidth / 2)} cx={cfg.width / 2} cy={cfg.height / 2}
+                    style={{ stroke: cfg.color, strokeWidth: cfg.strokeWidth, strokeDasharray: p + ' ' + c }} />;
             </svg>
-            <div className="text" style={{fontSize: cfg.fontSize}}>{value}</div>
+            <div className="text" style={{ fontSize: cfg.labelSize }}>{value}</div>
         </div>
     );
 }
 
-const getIcon = (data,prop) => {
-    if (prop === 'cpu') {
+const getIcon = (data, key) => {
+    if (key === 'cpu') {
         return 'icon-cpu';
-    } else if (prop ===  'fan') {
+    } else if (key.startsWith('fan')) {
         return 'icon-fan';
-    } else if (prop === 'battery') {
-        let percentage = getPercentage(data,prop);
+    } else if (key === 'battery') {
+        let percentage = getPercentage(data, key);
         let icon = [
-            {value:80,name:'full'},
-            {value:60,name:'eighty'},
-            {value:40,name:'sixty'},
-            {value:20,name:'forty'},
-            {value:10,name:'twenty'},
-            {value: 0,name:'empty'}
+            { value: 80, name: 'full' },
+            { value: 60, name: 'eighty' },
+            { value: 40, name: 'sixty' },
+            { value: 20, name: 'forty' },
+            { value: 10, name: 'twenty' },
+            { value: 0, name: 'empty' }
         ].find(element => {
             return percentage > element.value;
         });
@@ -111,53 +126,53 @@ const getIcon = (data,prop) => {
     return '';
 }
 
-// TODO support multi-values
-const getPercentage = (data,prop) => {
-    switch (prop) {
-        case 'cpu':
-            return Math.floor(data[prop]['cpu-temp'] / MAX_CPU_TEMP * 100);
-        case 'fan':
-            return Math.floor(data[prop]['fan-0-speed'] / MAX_FAN_SPEED * 100);
-        case 'battery':
-            return data[prop]['current-charge'][1];
-        default:
-            return undefined;
+const getPercentage = (data, key) => {
+    if (key === 'cpu') {
+        return Math.floor(data[key]['cpu-temp'][0] / MAX_CPU_TEMP * 100);
+    } else if (key.startsWith('fan')) {
+        return Math.floor(data[key]['fan-speed'][0] / MAX_FAN_SPEED * 100);
+    } else if (key === 'battery') {
+        return data[key]['current-charge'][1];
+    } else {
+        return undefined;
     }
 }
 
-// TODO support multi-values
-const getValue = (data,prop) => {
-    switch (prop) {
-        case 'cpu':
-            //TODO support F
-            return data[prop]['cpu-temp'] + '°C';
-        case 'fan':
-            return data[prop]['fan-0-speed'] + 'RPM';
-        case 'battery':
-            return data[prop]['current-charge'][1] + '%';
-        default:
-            return undefined;
+const getValue = (data, key) => {
+    if (key === 'cpu') {
+        return (cfg.tempUnit === 'F')
+            ? Math.floor(data[key]['cpu-temp'][0] * 1.8 + 32) + '°F'
+            : data[key]['cpu-temp'][0] + '°C';
+    } else if (key.startsWith('fan')) {
+        return data[key]['fan-speed'][0] + 'RPM';
+    } else if (key === 'battery') {
+        return data[key]['current-charge'][1] + '%';
+    } else {
+        return undefined;
     }
 }
 
 const renderStats = (output) => {
-    const data = IStatsParser.parse(output),
-          stats = Object.keys(data).map(prop => {
+    const parsedData = IStatsParser.parse(output),
+          data = Transformer.transform(parsedData),
+          stats = Object.keys(data).map(key => {
               return renderStat(
-                  prop, getIcon(data,prop),
-                  getPercentage(data,prop),
-                  getValue(data,prop)
+                  key,
+                  getIcon(data, key),
+                  getPercentage(data, key),
+                  getValue(data, key)
               );
           });
 
+    // FIXME: fix style href
     return (
         <div className="stats">
-            <link rel="stylesheet" type="text/css" href="index.css"></link>
+            <link rel="stylesheet" type="text/css" href="new-istats.widget/index.css"></link>
             {stats}
         </div>
     );
 
-    //const data = parseOutput(output);
+    //TODO: modularize once übersicht supports importing react
     //return (
     //    <Stat />
     //);

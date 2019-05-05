@@ -43,6 +43,24 @@ const getData = (line) => {
     };
 }
 
+const handleSection = (section, o, data) => {
+    if (section === 'CPU Stats') {
+        addSection(o, 'cpu', data);
+    }
+
+    if (section === 'Fan Stats') {
+        addSection(o, 'fan', data);
+    }
+
+    if (section == 'Battery Stats') {
+        addSection(o, 'battery', data);
+    }
+
+    if (section == 'Extra Stats') {
+        addSection(o, 'extra', data);
+    }
+}
+
 const addSection = (obj, key, data) => {
     obj[key] = obj[key] || {};
     obj[key][data.key] = data.value;
@@ -55,9 +73,16 @@ const addSection = (obj, key, data) => {
         }
     }
 }
+/**
+ * IStatsParser provides methods to parse istats CLI input.
+ */export default class IStatsParser {
 
-export default class IStatsParser {
-
+    /**
+     * Parses the istats command line {@code input} into an object.
+     * 
+     * @param {String} output istats command line output
+     * @return {Object} an object representing the istats command line output
+     */
     static parse(output) {
         let o = {};
 
@@ -87,17 +112,7 @@ export default class IStatsParser {
             continue;
           }
 
-          if (section === 'CPU Stats') {
-            addSection(o, 'cpu', data);
-          }
-
-          if (section === 'Fan Stats') {
-            addSection(o, 'fan', data);
-          }
-
-          if (section == 'Battery Stats') {
-            addSection(o, 'battery', data);
-          }
+          handleSection(section, o, data);
         }
 
         return o;
