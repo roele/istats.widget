@@ -37,6 +37,7 @@ const cfg = {
     top: '320px',
     left: '10px',
     color: '#666',
+    animations: true,
     /* Chart */
     width: '74',
     height: '40',
@@ -108,7 +109,11 @@ const getIcon = (data, key) => {
     if (key === 'cpu') {
         return 'icon-cpu';
     } else if (key.startsWith('fan')) {
-        return 'icon-fan';
+        let cls = 'icon-fan';
+        if (cfg.animations) {
+            cls += ' animation-fan';
+        }
+        return cls;
     } else if (key === 'battery') {
         let percentage = getPercentage(data, key);
         let icon = [
