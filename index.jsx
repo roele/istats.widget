@@ -111,17 +111,19 @@ const getIcon = (data, key) => {
     } else if (key.startsWith('fan')) {
         let cls = 'icon-fan';
         if (cfg.animations) {
-            cls += ' animation-fan';
+            let percentage = getPercentage(data, key),
+                rndPercentage = Math.ceil(percentage / 20) * 20;
+            cls += ' animation-fan-' + rndPercentage;
         }
         return cls;
     } else if (key === 'battery') {
         let percentage = getPercentage(data, key);
         let icon = [
-            { value: 80, name: 'full' },
-            { value: 60, name: 'eighty' },
-            { value: 40, name: 'sixty' },
-            { value: 20, name: 'forty' },
-            { value: 10, name: 'twenty' },
+            { value: 95, name: 'full' },
+            { value: 80, name: 'eighty' },
+            { value: 60, name: 'sixty' },
+            { value: 40, name: 'forty' },
+            { value: 20, name: 'twenty' },
             { value: 0, name: 'empty' }
         ].find(element => {
             return percentage > element.value;
