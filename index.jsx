@@ -65,7 +65,7 @@ export const className = `
 `;
 
 const MAX_CPU_TEMP = 90,
-      MAX_FAN_SPEED = 5000;
+      MAX_FAN_SPEED = 6000;
 
 const renderError = (error) => {
     return (
@@ -105,6 +105,10 @@ const renderStat = (title, iconName, percentage, value) => {
     );
 }
 
+const clamp = (value, min, max) => {
+    return Math.min(Math.max(value, min), max);
+}
+
 const getIcon = (data, key) => {
     if (key === 'cpu') {
         return 'icon-cpu';
@@ -113,7 +117,7 @@ const getIcon = (data, key) => {
         if (cfg.animations) {
             let percentage = getPercentage(data, key),
                 rndPercentage = Math.ceil(percentage / 20) * 20;
-            cls += ' animation-fan-' + rndPercentage;
+            cls += ' animation-fan-' + clamp(rndPercentage, 0, 100);
         }
         return cls;
     } else if (key === 'battery') {
