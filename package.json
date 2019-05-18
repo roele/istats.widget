@@ -29,7 +29,10 @@
     "prebuild": "npm run clean && npm run test",
     "build": "mkdir -p dist/istats.widget && rsync -R index.jsx index.css icons.ttf src/**/* dist/istats.widget --exclude **/__test__/**",
     "prezip": "npm run build",
-    "zip": "cd dist && zip -r istats.widget.zip istats.widget -i@../include.lst -x@../exclude.lst -X"
+    "zip": "cd dist && zip -r istats.widget.zip istats.widget -i@../include.lst -x@../exclude.lst -X && mv istats.widget.zip ..",
+    "preversion": "",
+    "version": "",
+    "postversion": ""
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",

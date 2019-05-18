@@ -181,10 +181,9 @@ const renderStats = (output) => {
               );
           });
 
-    // FIXME: fix style href
     return (
         <div className="stats">
-            <link rel="stylesheet" type="text/css" href="new-istats.widget/index.css"></link>
+            <link rel="stylesheet" type="text/css" href="istats.widget/index.css"></link>
             {stats}
         </div>
     );
