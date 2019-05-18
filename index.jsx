@@ -17,41 +17,46 @@
  * limitations under the License.
  */
 
- //TODO: uncomment once übersicht supports importing react
-import React from 'react';
-
-//TODO: unsupported, hence the <link> in {@link #renderStats}
-//import './index.css';
+//TODO: remove once übersicht supports importing react
+//import React from 'react';
+/* eslint-disable react/react-in-jsx-scope */
 
 import IStatsParser from './src/parser/IStatsParser.js';
 import Transformer from './src/transformer/Transformer.js';
 
-//TODO: modularize once übersicht supports importing react
-//import Stat from './src/components/Stat.jsx';
-//import Error from './src/components/Error.jsx';
-
+/**
+ * Configuration values
+ */
 const cfg = {
-    /* Temperature unit [CF] */
+    /* Temperature unit, either 'C' or 'F' */
     tempUnit: 'C',
-    /* Position */
+    /* Widget position (absolute) */
     top: '320px',
     left: '10px',
-    color: '#666',
+    /* Enable animations */
     animations: true,
-    /* Chart */
+    /* Stat position */
     width: '74',
     height: '40',
     radius: '18',
     strokeWidth: '2',
-    /* Icon */
+    /* Stat  color */
+    color: '#666',
+    /* Stat icon sizes */
     iconSize: '1.0rem',
     iconLineHeight: '2.5rem',
-    /* Label */
+    /* Stat label size */
     labelSize: '0.625rem'
 };
 
+/**
+ * Widget command
+ */
 export const command = '/usr/local/bin/istats';
 
+/**
+ * Widget refresh frequency in milliseconds
+ */
 export const refreshFrequency = 5000;
 
 export const className = `
@@ -64,7 +69,10 @@ export const className = `
     left: ${cfg.left};
 `;
 
+
+      //Maximum CPU temperature value (estimate)
 const MAX_CPU_TEMP = 90,
+      //Maximum fan speed value (estimate)
       MAX_FAN_SPEED = 6000;
 
 const renderError = (error) => {
@@ -73,11 +81,6 @@ const renderError = (error) => {
             {String(error)}
         </div>
     );
-
-    //TODO: modularize once übersicht supports importing react
-    //return (
-    //    <Error />
-    //);
 }
 
 const renderStat = (title, iconName, percentage, value) => {
@@ -121,18 +124,21 @@ const getIcon = (data, key) => {
         }
         return cls;
     } else if (key === 'battery') {
-        let percentage = getPercentage(data, key);
-        let icon = [
-            { value: 95, name: 'full' },
-            { value: 80, name: 'eighty' },
-            { value: 60, name: 'sixty' },
-            { value: 40, name: 'forty' },
-            { value: 20, name: 'twenty' },
-            { value: 0, name: 'empty' }
-        ].find(element => {
-            return percentage > element.value;
-        });
-        return 'icon-battery' + (icon && icon.name || 'empty');
+        let icon;
+        if (cfg.animations) {
+            let percentage = getPercentage(data, key);
+            icon = [
+                { value: 95, name: 'full' },
+                { value: 80, name: 'eighty' },
+                { value: 60, name: 'sixty' },
+                { value: 40, name: 'forty' },
+                { value: 20, name: 'twenty' },
+                { value: 0, name: 'empty' }
+            ].find(element => {
+                return percentage > element.value;
+            });
+        }
+        return 'icon-battery' + (icon && icon.name || 'full');
     }
     return '';
 }
@@ -182,11 +188,6 @@ const renderStats = (output) => {
             {stats}
         </div>
     );
-
-    //TODO: modularize once übersicht supports importing react
-    //return (
-    //    <Stat />
-    //);
 };
 
 export const render = ({ output, error }) => {
