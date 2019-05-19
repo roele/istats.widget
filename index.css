@@ -1,0 +1,101 @@
+@font-face {
+  font-family: 'Icons';
+  src: url('icons.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.stats {
+  display: flex;
+}
+
+.stat {
+  position: relative;
+}
+
+.stat i {
+  text-align: center;
+  position: absolute;
+  width: 100%;
+  line-height: 2.5rem;
+}
+
+.stat .text {
+  text-align: center;
+  display: block;
+}
+
+.stat svg {
+  transform: rotate(-90deg);
+}
+
+.stat circle {
+  fill: transparent;
+}
+
+[class^='icon-'],
+[class*=' icon-'] {
+  font-family: 'Icons';
+  background: none;
+  width: auto;
+  height: auto;
+  font-style: normal;
+}
+
+.icon-cpu:before {
+  content: '\f002';
+}
+
+.icon-batteryfull:before {
+  content: '\f0fa';
+}
+
+.icon-batteryeighty:before {
+  content: '\f0f9';
+}
+
+.icon-batterysixty:before {
+  content: '\f0f8';
+}
+
+.icon-batteryforty:before {
+  content: '\f0f7';
+}
+
+.icon-batterytwenty:before {
+  content: '\f0f6';
+}
+
+.stat .icon-batteryempty:before {
+  content: '\f0f5';
+}
+
+.icon-fan:before {
+  content: '\f66f';
+}
+
+.animation-fan-20 {
+  animation: spin 2s linear infinite;
+}
+
+.animation-fan-40 {
+  animation: spin 1s linear infinite;
+}
+
+.animation-fan-60 {
+  animation: spin .75s linear infinite;
+}
+
+.animation-fan-80 {
+  animation: spin .5s linear infinite;
+}
+
+.animation-fan-100 {
+  animation: spin .25s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(-360deg);
+  }
+}

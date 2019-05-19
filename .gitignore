@@ -1,2 +1,60 @@
-# Hidden System Files
+### macOS ###
+#############
+# General
 .DS_Store
+
+# Icon must end with two \r
+Icon
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+
+### Node ###
+############
+# Logs
+logs
+npm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul/jest
+coverage
+
+# Compiled binary addons (https://nodejs.org/api/addons.html)
+build
+dist
+# Ensure istats.widget.zip is included  as it is required by
+# Übersicht Widget Library (https://github.com/felixhageloh/uebersicht-widgets#widget-namewidgetzip)
+!istats.widget.zip
+
+# Jest JUnit reports
+reports
+
+# Dependency directories
+node_modules/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Output of 'npm pack'
+*.tgz
+
+# dotenv environment variables file
+.env

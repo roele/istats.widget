@@ -1,0 +1,64 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+version: 2.1
+orbs:
+  codecov: codecov/codecov@1.0.4
+jobs:
+  build:
+    docker:
+      # Specify the version you desire here
+      - image: circleci/node:lts
+
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # - image: circleci/mongo:3.4.4
+
+    working_directory: ~/repo
+
+    steps:
+      # Checkout repository to working directory
+      - checkout
+
+      # Install dependencies
+      - run:
+          name: Install dependencies
+          command: npm install
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+      # Run tests
+      - run:
+          name: Run unit tests
+          command: ./node_modules/.bin/jest --ci --runInBand --reporters=default --reporters=jest-junit
+          environment:
+            JEST_JUNIT_OUTPUT: "reports/junit/test-results.xml"
+
+      # Store test results
+      - store_test_results:
+          path: reports/junit
+
+      # Run code coverage report
+      - run:
+          name: Run code coverage report
+          command: ./node_modules/.bin/jest --collectCoverage=true
+
+      # Store artifacts
+      - store_artifacts:
+          path: reports
+
+      # Upload coverage report to codecov.io
+      - codecov/upload:
+          file: 'reports/coverage/*.json'

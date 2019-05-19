@@ -1,0 +1,51 @@
+{
+  "name": "uebersicht-widget-istats",
+  "description": "Übersicht widget for the iStats Ruby gem to display SMC information on your desktop.",
+  "version": "2.0.1-beta.0",
+  "private": true,
+  "keywords": [
+    "uebersicht",
+    "widget",
+    "istats",
+    "desktop"
+  ],
+  "author": "Roland Schaer <roele33@hotmail.com>",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/roele/istats",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/roele/istats.git"
+  },
+  "bugs": {
+    "url": "https://github.com/roele/istats/issues"
+  },
+  "main": "index.jsx",
+  "scripts": {
+    "lint": "eslint --ext .js --ext .jsx .",
+    "pretest": "npm run lint",
+    "test": "jest",
+    "code:coverage": "jest --coverage",
+    "clean": "rm -rf dist reports",
+    "prebuild": "npm run clean && npm run test",
+    "build": "mkdir -p dist/istats.widget && rsync -R index.jsx index.css icons.ttf src/**/* dist/istats.widget --exclude **/__test__/**",
+    "prezip": "npm run build",
+    "zip": "cd dist && zip -r istats.widget.zip istats.widget -i@../include.lst -x@../exclude.lst -X && mv istats.widget.zip ..",
+    "version": "npm run zip && git add --all",
+    "postversion": "git push && git push --tags && npm run clean"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "eslint": "^5.16.0",
+    "eslint-plugin-react": "^7.13.0",
+    "eslint-plugin-sonarjs": "^0.3.0",
+    "jest": "^24.7.1",
+    "jest-junit": "^6.4.0",
+    "react": "^16.8.6"
+  },
+  "jest-junit": {
+    "outputDirectory": "./reports/junit",
+    "outputName": "./test-results.xml"
+  }
+}
