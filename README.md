@@ -8,6 +8,7 @@ Made for [Übersicht](http://tracesof.net/uebersicht/).
 
 Uses the [iStats Ruby Gem](https://github.com/Chris911/iStats "iStats") to obtain SMC information about your system.
 
+![](screenshot.png)
 
 ## Installation
 
