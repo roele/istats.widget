@@ -37,6 +37,9 @@ coverage
 # Compiled binary addons (https://nodejs.org/api/addons.html)
 build
 dist
+# Ensure istats.widget.zip is included  as it is required by
+# Übersicht Widget Library (https://github.com/felixhageloh/uebersicht-widgets#widget-namewidgetzip)
+!istats.widget.zip
 
 # Jest JUnit reports
 reports
