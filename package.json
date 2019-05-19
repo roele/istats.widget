@@ -1,7 +1,7 @@
 {
   "name": "uebersicht-widget-istats",
   "description": "Übersicht widget for the iStats Ruby gem to display SMC information on your desktop.",
-  "version": "2.0.1-beta.0",
+  "version": "2.0.0",
   "private": true,
   "keywords": [
     "uebersicht",
