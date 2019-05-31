@@ -1,6 +1,6 @@
 # iStats Widget
 
-[![CircleCI](https://img.shields.io/circleci/project/github/roele/istats.widget/2.0-react.svg)](https://circleci.com/gh/roele/istats.widget/tree/2.0-react)
+[![CircleCI](https://img.shields.io/circleci/project/github/roele/istats.widget/master.svg)](https://circleci.com/gh/roele/istats.widget/tree/master)
 [![CodeCov](https://img.shields.io/codecov/c/github/roele/istats.widget/2.0-react.svg)](https://codecov.io/gh/roele/istats.widget)
 [![Apache-2.0](https://img.shields.io/github/license/roele/istats.widget.svg)](https://github.com/roele/istats.widget/blob/master/LICENSE)
 
@@ -39,18 +39,18 @@ The final result should look similar to following.
 Sone basic configuration options can be found in the file `index.jsx` in the top section defined as constant `cfg`.
 
 
-* `tempUnit` - CPU temperature unit, either `C` (Celsius) or `F` (Fahrenheit)  
-* `top` - Top position in px (e.g. `100px`)  
-* `left` - Left position in px (e.g. `100px`)  
-* `animations` - Icon animations flag, either `true` or `false`  
-* `width` - Stat donut chart width in px (e.g. `74`)  
-* `height` - Stat donut chart height in px (e.g. `40`)  
-* `radius` - Stats donut chart radius in px (e.g. `18`)  
-* `strokeWidth` - Stat donut chart stroke width in px (e.g. `2`)  
-* `color` - Stat color (e.g. `#666`)  
-* `iconSize` - Stat icon size (e.g. `1.0rem`)  
-* `iconLineHeight` - Stat icon line height (e.g. `2.5rem`)  
-* `labelSize` - Stat label font size (e.g. `0.625rem`)  
+* `tempUnit` - CPU temperature unit, either `C` (Celsius) or `F` (Fahrenheit)
+* `top` - Top position in px (e.g. `100px`)
+* `left` - Left position in px (e.g. `100px`)
+* `animations` - Icon animations flag, either `true` or `false`
+* `width` - Stat donut chart width in px (e.g. `74`)
+* `height` - Stat donut chart height in px (e.g. `40`)
+* `radius` - Stats donut chart radius in px (e.g. `18`)
+* `strokeWidth` - Stat donut chart stroke width in px (e.g. `2`)
+* `color` - Stat color (e.g. `#666`)
+* `iconSize` - Stat icon size (e.g. `1.0rem`)
+* `iconLineHeight` - Stat icon line height (e.g. `2.5rem`)
+* `labelSize` - Stat label font size (e.g. `0.625rem`)
 
 
 ### Troubleshooting
