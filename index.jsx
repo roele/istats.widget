@@ -73,7 +73,7 @@ export const className = `
       //Maximum CPU temperature value (estimate)
 const MAX_CPU_TEMP = 90,
       //Maximum fan speed value (estimate)
-      MAX_FAN_SPEED = 6000;
+      MAX_FAN_SPEED = 6200;
 
 const renderError = (error) => {
     return (
