@@ -169,10 +169,26 @@ const getValue = (data, key) => {
     }
 }
 
+// #21 - CSS animations workaround
+const fanAnimationsWorkaround = (data, key) => {
+    if (cfg.animations && key.startsWith('fan')) {
+        let stat = document.querySelector('[class*=' + key + '] i')
+        if (stat) {
+            stat.className = '';
+            window.requestAnimationFrame(function () {
+                window.requestAnimationFrame(function () {
+                    stat.className = getIcon(data, key);
+                });
+            });
+        }
+    }
+}
+
 const renderStats = (output) => {
     const parsedData = IStatsParser.parse(output),
           data = Transformer.transform(parsedData),
           stats = Object.keys(data).map(key => {
+              fanAnimationsWorkaround(data, key);
               return renderStat(
                   key,
                   getIcon(data, key),
