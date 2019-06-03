@@ -173,7 +173,7 @@ const getValue = (data, key) => {
 const fanAnimationsWorkaround = (data, key) => {
     if (cfg.animations && key.startsWith('fan')) {
         let stat = document.querySelector('[class*=' + key + '] i'),
-            hasChanged = stat.className != getIcon(data, key);
+            hasChanged = stat && stat.className != getIcon(data, key);
         if (stat && hasChanged) {
             window.requestAnimationFrame(function () {
                 stat.className = '';
