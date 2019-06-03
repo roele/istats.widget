@@ -95,7 +95,7 @@ const renderStat = (title, iconName, percentage, value) => {
     // radius = r - stroke-width / 2
 
     return (
-        <div className="stat">
+        <div className={"stat " + title}>
             <i className={"icon " + iconName} style={{ fontSize: cfg.iconSize, lineHeight: cfg.iconLineHeight }}></i>
             <svg width={cfg.width} height={cfg.height}>
                 <circle r={cfg.radius - (cfg.strokeWidth / 2)} cx={cfg.width / 2} cy={cfg.height / 2}
@@ -172,10 +172,11 @@ const getValue = (data, key) => {
 // #21 - CSS animations workaround
 const fanAnimationsWorkaround = (data, key) => {
     if (cfg.animations && key.startsWith('fan')) {
-        let stat = document.querySelector('[class*=' + key + '] i')
-        if (stat) {
-            stat.className = '';
+        let stat = document.querySelector('[class*=' + key + '] i'),
+            hasChanged = stat.className != getIcon(data, key);
+        if (stat && hasChanged) {
             window.requestAnimationFrame(function () {
+                stat.className = '';
                 window.requestAnimationFrame(function () {
                     stat.className = getIcon(data, key);
                 });
