@@ -28,6 +28,8 @@ import Transformer from './src/transformer/Transformer.js';
  * Configuration values
  */
 const cfg = {
+    /* Available stat keys, in order of rendering */
+    stats: ['cpu', 'fan-0', 'fan-1', 'battery'],
     /* Temperature unit, either 'C' or 'F' */
     tempUnit: 'C',
     /* Widget position (absolute) */
@@ -84,6 +86,8 @@ const renderError = (error) => {
 }
 
 const renderStat = (title, iconName, percentage, value) => {
+    if (!percentage) return ('');
+
     const c = Math.floor(2 * Math.PI * cfg.radius);
     const p = c / 100 * percentage;
 
@@ -188,7 +192,7 @@ const fanAnimationsWorkaround = (data, key) => {
 const renderStats = (output) => {
     const parsedData = IStatsParser.parse(output),
           data = Transformer.transform(parsedData),
-          stats = Object.keys(data).map(key => {
+          stats = cfg.stats.map(key => {
               fanAnimationsWorkaround(data, key);
               return renderStat(
                   key,
