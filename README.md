@@ -36,7 +36,7 @@ The final result should look similar to following.
 
 ### Widget configuration
 
-Sone basic configuration options can be found in the file `index.jsx` in the top section defined as constant `cfg`.
+Sone basic configuration options can be found in the file `index.jsx` in the top section defined as constant `config`.
 
 
 * `stats` - Array of stat keys in rendering order (e.g. `['cpu','fan-0','fan-1','battery']`)  
