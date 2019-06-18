@@ -99,6 +99,23 @@ class Stats extends React.Component {
         return undefined;
     }
 
+    // #21 - CSS animations workaround
+    resetFanAnimation (data, key) {
+        if (this.props.config.animations && key.startsWith('fan')) {
+            let stat = document.querySelector('[class*=' + key + '] i'),
+                hasChanged = stat && stat.className != this.getIcon(data, key);
+            if (stat && hasChanged) {
+                let self = this;
+                window.requestAnimationFrame(function () {
+                    stat.className = '';
+                    window.requestAnimationFrame(function () {
+                        stat.className = self.getIcon(data, key);
+                    });
+                });
+            }
+        }
+    }
+
     render() {
         let parsedData = IStatsParser.parse(this.props.output),
             data = Transformer.transform(parsedData),
@@ -106,6 +123,7 @@ class Stats extends React.Component {
                 let icon = this.getIcon(data, key),
                     percentage = this.getPercentage(data, key),
                     value = this.getValue(data, key);
+                this.resetFanAnimation(data, key);
                 return <Stat
                     config={this.props.config}
                     title={key}
