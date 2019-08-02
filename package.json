@@ -34,15 +34,19 @@
     "postversion": "git push && git push --tags && npm run clean"
   },
   "devDependencies": {
-    "babel-eslint": "^10.0.2",
     "@babel/preset-env": "^7.5.4",
-    "babel-preset-react": "^6.24.1",
+    "@babel/preset-react": "^7.0.0",
+    "@testing-library/jest-dom": "^4.0.0",
+    "@testing-library/react": "^8.0.7",
+    "babel-eslint": "^10.0.2",
+    "babel-jest": "^24.8.0",
     "eslint": "^5.16.0",
     "eslint-plugin-react": "^7.14.2",
     "eslint-plugin-sonarjs": "^0.3.0",
     "jest": "^24.8.0",
     "jest-junit": "^6.4.0",
-    "react": "^16.8.6"
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
   },
   "jest-junit": {
     "outputDirectory": "./reports/junit",

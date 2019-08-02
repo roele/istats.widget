@@ -106,6 +106,7 @@ class Stats extends React.Component {
                 hasChanged = stat && stat.className != this.getIcon(data, key);
             if (stat && hasChanged) {
                 let self = this;
+                /* istanbul ignore next */
                 window.requestAnimationFrame(function () {
                     stat.className = '';
                     window.requestAnimationFrame(function () {

@@ -45,9 +45,9 @@ class Stat extends React.Component {
                 <svg width={this.props.config.width} height={this.props.config.height}>
                     <circle r={this.props.config.radius - (this.props.config.strokeWidth / 2)} cx={this.props.config.width / 2} cy={this.props.config.height / 2}
                         style={{ stroke: 'transparent', strokeWidth: this.props.config.strokeWidth, strokeDasharray: c + ' ' + c }} />;
-                <circle r={this.props.config.radius - (this.props.config.strokeWidth / 2)} cx={this.props.config.width / 2} cy={this.props.config.height / 2}
+                    <circle r={this.props.config.radius - (this.props.config.strokeWidth / 2)} cx={this.props.config.width / 2} cy={this.props.config.height / 2}
                         style={{ stroke: this.props.config.color, strokeWidth: this.props.config.strokeWidth, strokeDasharray: p + ' ' + c }} />;
-            </svg>
+                </svg>
                 <div className="text" style={{ fontSize: this.props.config.labelSize }}>{this.props.value}</div>
             </div>
         );
