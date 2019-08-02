@@ -1,7 +1,7 @@
 # iStats Widget
 
 [![CircleCI](https://img.shields.io/circleci/project/github/roele/istats.widget/master.svg)](https://circleci.com/gh/roele/istats.widget/tree/master)
-[![CodeCov](https://img.shields.io/codecov/c/github/roele/istats.widget/2.0-react.svg)](https://codecov.io/gh/roele/istats.widget)
+[![CodeCov](https://img.shields.io/codecov/c/github/roele/istats.widget/master.svg)](https://codecov.io/gh/roele/istats.widget)
 [![Apache-2.0](https://img.shields.io/github/license/roele/istats.widget.svg)](https://github.com/roele/istats.widget/blob/master/LICENSE)
 
 Made for [Übersicht](http://tracesof.net/uebersicht/).
