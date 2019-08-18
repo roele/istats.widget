@@ -19,7 +19,7 @@
 
 export const config = {
     /* Available stat keys, in order of rendering */
-    stats: ['cpu', 'fan-0', 'fan-1', 'battery', 'extra'],
+    stats: ['cpu', 'fan-0', 'fan-1', 'fan-N', 'battery', 'other-unknown', 'extra'],
     /* Temperature unit, either 'C' or 'F' */
     tempUnit: 'C',
     /* Widget position (absolute) */

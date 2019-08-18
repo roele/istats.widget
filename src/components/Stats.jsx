@@ -120,7 +120,7 @@ class Stats extends React.Component {
     render() {
         let parsedData = IStatsParser.parse(this.props.output),
             data = Transformer.transform(parsedData),
-            stats = this.props.config.stats.map(key => {
+            stats = this.props.config.stats.filter(key => data[key]).map(key => {
                 let icon = this.getIcon(data, key),
                     percentage = this.getPercentage(data, key),
                     value = this.getValue(data, key);
