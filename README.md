@@ -39,10 +39,10 @@ The final result should look similar to following.
 Sone basic configuration options can be found in the file `index.jsx` in the top section defined as constant `config`.
 
 
-* `stats` - Array of stat keys in rendering order (e.g. `['cpu','fan-0','fan-1','battery']`)  
+* `stats` - Array of stat keys in rendering order (e.g. `['cpu','fan-0','fan-1','battery']`). Keys for which no data is present will be ignored as availability of data depends on the underlying hardware.  
     Available keys:  
     * `cpu` - CPU stats
-    * `fan-N` - Fan #N stats
+    * `fan-N` - Fan stats where `N` represents the (index) number starting with `0`
     * `battery` - Battery stats
 * `tempUnit` - CPU temperature unit, either `C` (Celsius) or `F` (Fahrenheit)
 * `top` - Top position in px (e.g. `100px`)
