@@ -26,17 +26,23 @@ import Stats from './src/components/Stats.jsx';
  * Configuration values
  */
 const config = {
+    /* Enable animations */
+    animations: true,
     /* Available stat keys, in order of rendering */
-    stats: ['cpu', 'fan-0', 'fan-1', 'battery'],
+    stats: [
+        'cpu.cpu-temp',
+        'extra.tcgc-peci-gpu-temp',
+        'fan.fan-0-speed',
+        'fan.fan-1-speed',
+        'battery.current-charge'
+    ],
     /* Temperature unit, either 'C' or 'F' */
     tempUnit: 'C',
     /* Widget position (absolute) */
     top: '320px',
-    left: '10px',
-    /* Enable animations */
-    animations: true,
+    left: '14px',
     /* Stat position */
-    width: '74',
+    width: '72',
     height: '40',
     radius: '18',
     strokeWidth: '2',

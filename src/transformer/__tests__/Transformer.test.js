@@ -17,9 +17,21 @@
  * limitations under the License.
  */
 
- import Transformer from '../Transformer';
- import {input,output} from './Transformer.res.js';
+import Transformer from '../Transformer';
+import {input,output} from './Transformer.res.js';
 
- test('Transformer tranforms istats object', () => {
-     expect(Transformer.transform(input)).toEqual(output);
- });
+test('Transformer handles null', () => {
+    expect(Transformer.transform(null)).toEqual({});
+});
+
+test('Transformer handles undefined', () => {
+    expect(Transformer.transform(undefined)).toEqual({});
+});
+
+test('Transformer handles empty string', () => {
+    expect(Transformer.transform('')).toEqual({});
+});
+
+test('Transformer tranforms istats object', () => {
+    expect(Transformer.transform(input)).toEqual(output);
+});

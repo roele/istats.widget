@@ -47,6 +47,11 @@ export const output = {
     "cpu": {
         "cpu-temp": ["47.6"]
     },
+    "fan": {
+        "total-fans-in-system": ["2"],
+        "fan-0-speed": ["2172"],
+        "fan-1-speed": ["1995"]
+    },
     "battery": {
         "battery-health": ["Good"],
         "cycle-count": ["435", 43.5],
@@ -57,15 +62,9 @@ export const output = {
         "battery-temp": ["33.6"]
     },
     "extra": {
-        "tc1c-core-1-temp": "42.0",
-        "tc2c-core-2-temp": "43.0",
-        "tc3c-core-3-temp": "42.0",
-        "tc4c-core-4-temp": "44.0",
-    },
-    "fan-0": {
-        "fan-speed": ["2172"]
-    },
-    "fan-1": {
-        "fan-speed": ["1995"]
+        "tc1c-core-1-temp": ["42.0"],
+        "tc2c-core-2-temp": ["43.0"],
+        "tc3c-core-3-temp": ["42.0"],
+        "tc4c-core-4-temp": ["44.0"],
     }
 };

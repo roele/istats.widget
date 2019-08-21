@@ -35,10 +35,10 @@ Design capacity:        6669 mAh\n\
 Battery temp:           33.69°C\n\
 \n\
 --- Extra Stats ---\n\
-TC1C Core 1 temp: 42.0° C▁▂▃▅▆▇\n\
-TC2C Core 2 temp: 43.0° C▁▂▃▅▆▇\n\
-TC3C Core 3 temp: 42.0° C▁▂▃▅▆▇\n\
-TC4C Core 4 temp: 44.0° C▁▂▃▅▆▇\n\
+TC1C Core 1 temp: 42.0° C    ▁▂▃▅▆▇\n\
+TC2C Core 2 temp: 43.0° C    ▁▂▃▅▆▇\n\
+TC3C Core 3 temp: 42.0° C    ▁▂▃▅▆▇\n\
+TC4C Core 4 temp: 44.0° C    ▁▂▃▅▆▇\n\
 For more stats run `istats extra` and follow the instructions.';
 
 export const output = {

@@ -25,12 +25,17 @@ const handleCPUs = (input, output, key) => {
 }
 
 const handleFans = (input, output, key) => {
-    var numFans = input[key]['total-fans-in-system'];
-    for (var i = 0; i < numFans; i++) {
-        output['fan-' + i] = {
-            'fan-speed': [input[key]['fan-' + i + '-speed']]
-        };
-    }
+    output['fan'] = {};
+    Object.keys(input[key]).forEach(prop => {
+        output['fan'][prop] = [input[key][prop]];
+    });
+}
+
+const handleExtras = (input, output, key) => {
+    output['extra'] = {};
+    Object.keys(input[key]).forEach(prop => {
+        output['extra'][prop] = [input[key][prop]];
+    });
 }
 
 const handleKey = (input, output, key) => {
@@ -40,6 +45,10 @@ const handleKey = (input, output, key) => {
     }
     if (key === 'fan') {
         handleFans(input, output, key);
+        return true;
+    }
+    if (key === 'extra') {
+        handleExtras(input, output, key);
         return true;
     }
     return false;
@@ -58,6 +67,7 @@ const handleKey = (input, output, key) => {
      */
     static transform(input) {
         let output = {};
+        if (!input) return output;
         Object.keys(input).forEach(key => {
             if (!handleKey(input, output, key)) {
                 // copy original value

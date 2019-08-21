@@ -30,8 +30,12 @@ class Stats extends React.Component {
     constructor(props) {
         super(props);
 
+        //Default icon
+        this.DEFAULT_ICON = 'icon-cpu-processor';
         //Maximum CPU temperature value (estimate)
         this.MAX_CPU_TEMP = 90;
+        //Maximum GPU temperature value (estimate)
+        this.MAX_GPU_TEMP = 90;
         //Maximum fan speed value (estimate)
         this.MAX_FAN_SPEED = 6200;
     }
@@ -41,68 +45,115 @@ class Stats extends React.Component {
     }
 
     getIcon(data, key) {
-        if (key === 'cpu') {
-            return 'icon-cpu';
-        } else if (key.startsWith('fan')) {
-            let cls = 'icon-fan';
-            if (this.props.config.animations) {
-                let percentage = this.getPercentage(data, key),
-                    rndPercentage = Math.ceil(percentage / 20) * 20;
-                cls += ' animation-fan-' + this.clamp(rndPercentage, 0, 100);
-            }
-            return cls;
-        } else if (key === 'battery') {
-            let icon;
-            if (this.props.config.animations) {
-                let percentage = this.getPercentage(data, key);
-                icon = [
-                    { value: 95, name: 'full' },
-                    { value: 80, name: 'eighty' },
-                    { value: 60, name: 'sixty' },
-                    { value: 40, name: 'forty' },
-                    { value: 20, name: 'twenty' },
-                    { value: 0, name: 'empty' }
-                ].find(element => {
-                    return percentage > element.value;
-                });
-            }
-            return 'icon-battery' + (icon && icon.name || 'full');
+        let ref = this.getRef(key);
+        if (ref.obj === 'fan') {
+            return this.getFanIcon(data, key);
+        } else if (ref.obj === 'battery') {
+            return this.getBatteryIcon(data, key);
+        }
+        return this.getIconForKey(data, key);
+    }
+
+    getFanIcon(data, key) {
+        let cls = 'icon-fan';
+        if (this.props.config.animations) {
+            let percentage = this.getPercentage(data, key),
+                rndPercentage = Math.ceil(percentage / 20) * 20;
+            cls += ' animation-fan-' + this.clamp(rndPercentage, 0, 100);
+        }
+        return cls;
+    }
+
+    getBatteryIcon(data, key) {
+        let icon;
+        if (this.props.config.animations) {
+            let percentage = this.getPercentage(data, key);
+            icon = [
+                { value: 95, name: 'full' },
+                { value: 80, name: 'eighty' },
+                { value: 60, name: 'sixty' },
+                { value: 40, name: 'forty' },
+                { value: 20, name: 'twenty' },
+                { value: 0, name: 'empty' }
+            ].find(element => {
+                return percentage > element.value;
+            });
+        }
+        return 'icon-battery' + (icon && icon.name);
+    }
+
+    getIconForKey(data, key) {
+        if (key.indexOf('cpu') > -1) {
+            return 'icon-cpu-processor';
+        }
+        if (key.indexOf('gpu') > -1) {
+            return 'icon-gpu-graphicscard';
+        }
+        if (key.indexOf('memory') > -1) {
+            return 'icon-ram';
         }
         return '';
     }
 
     getPercentage(data, key) {
-        if (!data) return undefined;
+        let ref  = this.getRef(key);
 
-        if (key === 'cpu') {
-            return Math.floor(data[key]['cpu-temp'][0] / this.MAX_CPU_TEMP * 100);
-        } else if (key.startsWith('fan')) {
-            return Math.floor(data[key]['fan-speed'][0] / this.MAX_FAN_SPEED * 100);
-        } else if (key === 'battery') {
-            return data[key]['current-charge'][1];
+        if (ref.obj === 'cpu') {
+            return this.getPercentageValue(data[ref.obj][ref.prop][0], this.MAX_CPU_TEMP);
+        } else if (ref.obj === 'fan') {
+            return this.getPercentageValue(data[ref.obj][ref.prop][0], this.MAX_FAN_SPEED);
+        } else if (ref.obj === 'battery') {
+            return data[ref.obj][ref.prop][1];
+        } else if (ref.obj === 'extra') {
+            return this.getPercentageValue(data[ref.obj][ref.prop][0], this.MAX_GPU_TEMP);
         }
         return undefined;
     }
 
     getValue(data, key) {
-        if (!data) return undefined;
+        let ref = this.getRef(key);
 
-        if (key === 'cpu') {
-            return (this.props.config.tempUnit === 'F')
-                ? Math.floor(data[key]['cpu-temp'][0] * 1.8 + 32) + '°F'
-                : data[key]['cpu-temp'][0] + '°C';
-        } else if (key.startsWith('fan')) {
-            return data[key]['fan-speed'][0] + 'RPM';
-        } else if (key === 'battery') {
-            return data[key]['current-charge'][1] + '%';
+        if (ref.obj === 'cpu') {
+            return this.getTempValue(data[ref.obj][ref.prop][0]);
+        } else if (ref.obj === 'fan') {
+            return data[ref.obj][ref.prop][0] + 'RPM';
+        } else if (ref.obj === 'battery') {
+            return data[ref.obj][ref.prop][1] + '%';
+        } else if (ref.obj === 'extra') {
+            return this.getTempValue(data[ref.obj][ref.prop][0]);
         }
         return undefined;
+    }
+
+    getRef(key) {
+        return {
+            obj: key.replace(/(.*?)\.(.*)/, '$1'),
+            prop: key.replace(/(.*?)\.(.*)/, '$2')
+        }
+    }
+
+    getPercentageValue(value, maxValue) {
+        return Math.floor(value / maxValue * 100);
+    }
+
+    getTempValue(value) {
+        return (this.props.config.tempUnit === 'F')
+                ? Math.floor(value * 1.8 + 32) + '°F'
+                : value + '°C';
+    }
+
+    getClassName(key) {
+        return key.replace(/\./, '-');
+    }
+
+    isObject(obj) {
+        return typeof obj === 'object' && obj !== null;
     }
 
     // #21 - CSS animations workaround
     resetFanAnimation (data, key) {
         if (this.props.config.animations && key.startsWith('fan')) {
-            let stat = document.querySelector('[class*=' + key + '] i'),
+            let stat = document.querySelector('[class*=' + this.getClassName(key) + '] i'),
                 hasChanged = stat && stat.className != this.getIcon(data, key);
             if (stat && hasChanged) {
                 let self = this;
@@ -120,20 +171,25 @@ class Stats extends React.Component {
     render() {
         let parsedData = IStatsParser.parse(this.props.output),
             data = Transformer.transform(parsedData),
-            stats = this.props.config.stats.filter(key => data[key]).map(key => {
-                let icon = this.getIcon(data, key),
-                    percentage = this.getPercentage(data, key),
-                    value = this.getValue(data, key);
-                this.resetFanAnimation(data, key);
-                return <Stat
-                    config={this.props.config}
-                    title={key}
-                    icon={icon}
-                    percentage={percentage}
-                    key={key}
-                    value={value}
-                />
-            });
+            stats = this.props.config.stats
+                .filter(item => {
+                    let key = this.isObject(item) ? item.key : item,
+                        ref = this.getRef(key);
+                    return data[ref.obj] && data[ref.obj][ref.prop];
+                })
+                .map(item => {
+                    let key = this.isObject(item) ? item.key : item;
+                    this.resetFanAnimation(data, key);
+
+                    return <Stat
+                        config={this.props.config}
+                        title={this.getClassName(key)}
+                        icon={this.isObject(item) ? (item.icon || this.DEFAULT_ICON ) : this.getIcon(data, key)}
+                        percentage={this.getPercentage(data, key)}
+                        key={key}
+                        value={this.getValue(data, key)}
+                    />
+                });
 
         return (
             <div className="stats">

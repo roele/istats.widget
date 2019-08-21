@@ -17,9 +17,18 @@
  * limitations under the License.
  */
 
-export const config = {
+export let config = {
     /* Available stat keys, in order of rendering */
-    stats: ['cpu', 'fan-0', 'fan-1', 'fan-N', 'battery', 'other-unknown', 'extra'],
+    stats: [
+        {key:'cpu.cpu-temp'},
+        'fan.fan-0-speed',
+        'fan.fan-1-speed',
+        'fan.fan-N-speed', // non-existing
+        'battery.current-charge',
+        'other.non-existing', // non-existing
+        {key:'extra.tc1c-core-1-temp',icon:'icon-cpu-processor'},
+        'extra.tc2c-core-2-temp'
+    ],
     /* Temperature unit, either 'C' or 'F' */
     tempUnit: 'C',
     /* Widget position (absolute) */
@@ -59,10 +68,13 @@ Design capacity:        6669 mAh\n\
 Battery temp:           33.69°C\n\
 \n\
 --- Extra Stats ---\n\
-TC1C Core 1 temp: 42.0° C▁▂▃▅▆▇\n\
-TC2C Core 2 temp: 43.0° C▁▂▃▅▆▇\n\
-TC3C Core 3 temp: 42.0° C▁▂▃▅▆▇\n\
-TC4C Core 4 temp: 44.0° C▁▂▃▅▆▇\n\
+TCGC PECI GPU:          72.0°C      ▁▂▃▅▆▇\n\
+TC1C Core 1 temp: 42.0° C    ▁▂▃▅▆▇\n\
+TC2C Core 2 temp: 43.0° C    ▁▂▃▅▆▇\n\
+TC3C Core 3 temp: 42.0° C    ▁▂▃▅▆▇\n\
+TC4C Core 4 temp: 44.0° C    ▁▂▃▅▆▇\n\
+TM0P Memory Slot Proximity: 56.88°C     ▁▂▃▅▆▇\n\
+TPCD Platform Controller Hub Die: 65.0°C      ▁▂▃▅▆▇\n\
 For more stats run `istats extra` and follow the instructions.';
 
 export const output_2 = '--- CPU Stats ---\n\
@@ -83,8 +95,11 @@ Design capacity:        6669 mAh\n\
 Battery temp:           33.69°C\n\
 \n\
 --- Extra Stats ---\n\
-TC1C Core 1 temp: 42.0° C▁▂▃▅▆▇\n\
-TC2C Core 2 temp: 43.0° C▁▂▃▅▆▇\n\
-TC3C Core 3 temp: 42.0° C▁▂▃▅▆▇\n\
-TC4C Core 4 temp: 44.0° C▁▂▃▅▆▇\n\
+TCGC PECI GPU:          72.0°C      ▁▂▃▅▆▇\n\
+TC1C Core 1 temp: 42.0° C    ▁▂▃▅▆▇\n\
+TC2C Core 2 temp: 43.0° C    ▁▂▃▅▆▇\n\
+TC3C Core 3 temp: 42.0° C    ▁▂▃▅▆▇\n\
+TC4C Core 4 temp: 44.0° C    ▁▂▃▅▆▇\n\
+TM0P Memory Slot Proximity: 56.88°C     ▁▂▃▅▆▇\n\
+TPCD Platform Controller Hub Die: 65.0°C      ▁▂▃▅▆▇\n\
 For more stats run `istats extra` and follow the instructions.';
