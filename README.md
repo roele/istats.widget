@@ -111,10 +111,3 @@ Some basic configuration options can be found in the file `index.jsx` in the top
 ### Credits
 
 Icons by [WebHostingHub](http://www.webhostinghub.com/glyphs/)
-
-
-### Support on Beerpay
-
-Wanna thank me with a 🍺?
-
-[![BeerPay](https://img.shields.io/beerpay/roele/istats.widget.svg)](https://beerpay.io/roele/istats.widget)
