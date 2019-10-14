@@ -43,7 +43,6 @@ function verifyIcon(percentage) {
 describe('Stats component', () => {
 
     test('renders stats', () => {
-
         render(<Stats config={config} output={output} />);
 
         const element = document.querySelector('.stats'),
@@ -193,16 +192,15 @@ describe('Stats component', () => {
     });
 
     test('ignores unknown section', () => {
-
-        let output = '--- Unknown Stats ---\n\
-        TCGC PECI GPU:          72.0°C      ▁▂▃▅▆▇\n\
-        TC1C Core 1 temp: 42.0° C    ▁▂▃▅▆▇\n\
-        TC2C Core 2 temp: 43.0° C    ▁▂▃▅▆▇\n\
-        TC3C Core 3 temp: 42.0° C    ▁▂▃▅▆▇\n\
-        TC4C Core 4 temp: 44.0° C    ▁▂▃▅▆▇\n\
-        TM0P Memory Slot Proximity: 56.88°C     ▁▂▃▅▆▇\n\
-        TPCD Platform Controller Hub Die: 65.0°C      ▁▂▃▅▆▇\n\
-        For more stats run `istats extra` and follow the instructions.';
+        let output ='--- Unknown Stats ---\n' +
+                    'TCGC PECI GPU:          72.0°C      ▁▂▃▅▆▇\n' +
+                    'TC1C Core 1 temp: 42.0° C    ▁▂▃▅▆▇\n' +
+                    'TC2C Core 2 temp: 43.0° C    ▁▂▃▅▆▇\n' +
+                    'TC3C Core 3 temp: 42.0° C    ▁▂▃▅▆▇\n' +
+                    'TC4C Core 4 temp: 44.0° C    ▁▂▃▅▆▇\n' +
+                    'TM0P Memory Slot Proximity: 56.88°C     ▁▂▃▅▆▇\n' +
+                    'TPCD Platform Controller Hub Die: 65.0°C      ▁▂▃▅▆▇\n' +
+                    'For more stats run `istats extra` and follow the instructions.';
 
         render(<Stats config={config} output={output} />);
 
@@ -215,5 +213,38 @@ describe('Stats component', () => {
         expect(stats).not.toBeNull();
         expect(stats).toBeInstanceOf(NodeList);
         expect(stats.length).toEqual(0);
+    });
+
+    test('renders fan with zero value', () => {
+        let cfg = Object.assign({}, config, {
+            animations: false,
+            stats: [
+                'cpu.cpu-temp',
+                'fan.fan-0-speed'
+            ]
+        });
+
+        let output ='--- CPU Stats ---\n' +
+                    'CPU temp:               47.63°C     ▁▂▃▅▆▇\n' +
+                    '\n' +
+                    '--- Fan Stats ---\n' +
+                    'Total fans in system:   1\n' +
+                    'Fan 0 speed:            0 RPM    ▁▂▃▅▆▇\n' +
+                    'For more stats run `istats extra` and follow the instructions.';
+
+        render(<Stats config={cfg} output={output} />);
+
+        const element = document.querySelector('.stats'),
+              stats = document.querySelectorAll('.stat');
+
+        expect(element).not.toBeNull();
+        expect(element).toBeInTheDocument();
+
+        expect(stats).not.toBeNull();
+        expect(stats).toBeInstanceOf(NodeList);
+        expect(stats.length).toEqual(2);
+
+        expect(stats[0].classList.contains(CLS_CPU_TEMP)).toBe(true);
+        expect(stats[1].classList.contains(CLS_FAN_0_SPEED)).toBe(true);
     });
 });

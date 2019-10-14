@@ -27,7 +27,7 @@ class Stat extends React.Component {
     }
 
     render() {
-        if (!this.props.percentage) return ('');
+        if (this.props.percentage === undefined) return ('');
 
         const c = Math.floor(2 * Math.PI * this.props.config.radius);
         const p = c / 100 * this.props.percentage;
