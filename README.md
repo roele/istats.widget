@@ -105,6 +105,7 @@ Some basic configuration options can be found in the file `index.jsx` in the top
     * Open `Show Debug Console` to verify if there are errors shown in the `Console` tab. If so please report an issue to https://github.com/roele/istats.widget/issues with the error details.
 * **An error is shown in place of the widget**
     * Please report an issue to https://github.com/roele/istats.widget/issues with the error, environment and hardware details.
+    * Did you upgrade your macOS recently? Try re-installing the iStats Ruby gem as indicated in the prerequisites.
 
 
 ### Credits
