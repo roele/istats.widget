@@ -40,9 +40,6 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      # Run SonarCloud scan
-      - sonarcloud/scan
-
       # Run tests
       - run:
           name: Run unit tests
@@ -66,6 +63,10 @@ jobs:
       # Upload coverage report to codecov.io
       - codecov/upload:
           file: 'reports/coverage/*.json'
+
+      # Run SonarCloud scan
+      - sonarcloud/scan
+
 workflows:
   main:
     jobs:
