@@ -75,9 +75,15 @@ Some basic configuration options can be found in the file `index.jsx` in the top
 
 * `tempUnit` `{String}` - CPU temperature unit, either `C` (Celsius) or `F` (Fahrenheit)
 
+* `position` `{String}` - Screen corner position, either `top-left`, `top-right`, `bottom-left` or `bottom-right`
+
 * `top` `{String}` - Top position in px (e.g. `100px`)
 
 * `left` `{String}` - Left position in px (e.g. `100px`)
+
+* `bottom` `{String}` - Bottom position in px (e.g. `100px`)
+
+* `right` `{String}` - Right position in px (e.g. `100px`)
 
 * `animations` `{Boolean}` - Icon animations flag, either `true` or `false`
 

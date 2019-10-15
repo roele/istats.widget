@@ -6,7 +6,24 @@
 }
 
 .stats {
+  position: absolute;
   display: flex;
+}
+
+.stats.top-left {
+  justify-content: flex-start;
+}
+
+.stats.top-right {
+  justify-content: flex-end;
+}
+
+.stats.bottom-left {
+  justify-content: flex-start;
+}
+
+.stats.bottom-right {
+  justify-content: flex-end;
 }
 
 .stat {

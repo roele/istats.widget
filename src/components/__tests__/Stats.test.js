@@ -215,36 +215,46 @@ describe('Stats component', () => {
         expect(stats.length).toEqual(0);
     });
 
-    test('renders fan with zero value', () => {
-        let cfg = Object.assign({}, config, {
-            animations: false,
-            stats: [
-                'cpu.cpu-temp',
-                'fan.fan-0-speed'
-            ]
-        });
+    function verifyPositionClass(config, output, expectedClass) {
+        render(<Stats config={config} output={output} />);
 
-        let output ='--- CPU Stats ---\n' +
-                    'CPU temp:               47.63°C     ▁▂▃▅▆▇\n' +
-                    '\n' +
-                    '--- Fan Stats ---\n' +
-                    'Total fans in system:   1\n' +
-                    'Fan 0 speed:            0 RPM    ▁▂▃▅▆▇\n' +
-                    'For more stats run `istats extra` and follow the instructions.';
-
-        render(<Stats config={cfg} output={output} />);
-
-        const element = document.querySelector('.stats'),
-              stats = document.querySelectorAll('.stat');
+        const element = document.querySelector('.stats');
 
         expect(element).not.toBeNull();
         expect(element).toBeInTheDocument();
+        expect(element).toHaveClass(expectedClass);
+    }
 
-        expect(stats).not.toBeNull();
-        expect(stats).toBeInstanceOf(NodeList);
-        expect(stats.length).toEqual(2);
-
-        expect(stats[0].classList.contains(CLS_CPU_TEMP)).toBe(true);
-        expect(stats[1].classList.contains(CLS_FAN_0_SPEED)).toBe(true);
+    test('renders stats position top-left', () => {
+        verifyPositionClass(config, output, 'top-left');
     });
+
+    test('renders stats position top-right', () => {
+        Object.assign(config, {position: 'top-right'});
+        verifyPositionClass(config, output, 'top-right');
+    });
+
+    test('renders stats position bottom-left', () => {
+        Object.assign(config, {position: 'bottom-left'});
+        verifyPositionClass(config, output, 'bottom-left');
+    });
+
+    test('renders stats position bottom-right', () => {
+        Object.assign(config, {position: 'bottom-right'});
+        verifyPositionClass(config, output, 'bottom-right');
+    });
+
+    test('renders stats position default', () => {
+        Object.assign(config, {position: undefined});
+
+        render(<Stats config={config} output={output} />);
+
+        const element = document.querySelector('.stats');
+
+        expect(element).not.toBeNull();
+        expect(element).toBeInTheDocument();
+        expect(element).toHaveClass('stats');
+        expect(element).not.toHaveClass('top-left');
+    });
+
 });

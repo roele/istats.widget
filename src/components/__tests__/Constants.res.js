@@ -31,9 +31,12 @@ export let config = {
     ],
     /* Temperature unit, either 'C' or 'F' */
     tempUnit: 'C',
-    /* Widget position (absolute) */
-    top: '320px',
-    left: '10px',
+    /* Widget position */
+    position: 'top-left',
+    top: '0px',
+    left: '0px',
+    bottom: '0px',
+    right: '0px',
     /* Enable animations */
     animations: true,
     /* Stat position */

@@ -146,6 +146,21 @@ class Stats extends React.Component {
         return key.replace(/\./, '-');
     }
 
+    getPosition(config) {
+        switch(config.position) {
+            case 'top-left':
+                return {top: config.top, left: config.left}
+            case 'bottom-left':
+                return {bottom: config.bottom, left: config.left}
+            case 'top-right':
+                return {top: config.top, right: config.right}
+            case 'bottom-right':
+                return {bottom: config.bottom, right: config.right}
+            default:
+                return {top: config.top, left: config.left}
+        }
+    }
+
     isObject(obj) {
         return typeof obj === 'object' && obj !== null;
     }
@@ -169,9 +184,12 @@ class Stats extends React.Component {
     }
 
     render() {
-        let parsedData = IStatsParser.parse(this.props.output),
+        let config = this.props.config,
+            clsName = 'stats',
+            position = this.getPosition(config),
+            parsedData = IStatsParser.parse(this.props.output),
             data = Transformer.transform(parsedData),
-            stats = this.props.config.stats
+            stats = config.stats
                 .filter(item => {
                     let key = this.isObject(item) ? item.key : item,
                         ref = this.getRef(key);
@@ -182,7 +200,7 @@ class Stats extends React.Component {
                     this.resetFanAnimation(data, key);
 
                     return <Stat
-                        config={this.props.config}
+                        config={config}
                         title={this.getClassName(key)}
                         icon={this.isObject(item) ? (item.icon || this.DEFAULT_ICON ) : this.getIcon(data, key)}
                         percentage={this.getPercentage(data, key)}
@@ -191,8 +209,13 @@ class Stats extends React.Component {
                     />
                 });
 
+            if (config.position
+                    && config.position.match(/(top|bottom)-(left|right)/)) {
+                clsName += ' ' + config.position;
+            }
+
         return (
-            <div className="stats">
+            <div className={clsName} style={position}>
                 <link rel="stylesheet" type="text/css" href="istats.widget/index.css"></link>
                 {stats}
             </div>

@@ -49,7 +49,7 @@ describe('Stat component', () => {
     });
 
     test('does not render stat without percentage', () => {
-        render(< Stat />);
+        render(<Stat />);
 
         const element = document.querySelector('.stat');
 
@@ -57,4 +57,23 @@ describe('Stat component', () => {
         expect(element).not.toBeInTheDocument();
     });
 
+    test('does render stat with 0 percentage', () => {
+        render(<Stat config={config} title={"title"} icon={"cpu"} percentage={0} key={"key"} value={"0%"} />);
+
+        const element = document.querySelector('.stat'),
+              icon = document.querySelector('i.icon'),
+              text = document.querySelector('.text');
+
+        expect(element).not.toBeNull();
+        expect(element).toBeInTheDocument();
+        expect(element).toHaveClass('title');
+
+        // icon
+        expect(icon).not.toBeNull();
+        expect(icon).toHaveClass('cpu');
+
+        // text
+        expect(text).not.toBeNull();
+        expect(text).toHaveTextContent('0%');
+    });
 });

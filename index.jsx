@@ -38,9 +38,12 @@ const config = {
     ],
     /* Temperature unit, either 'C' or 'F' */
     tempUnit: 'C',
-    /* Widget position (absolute) */
+    /* Widget position */
+    position: 'top-left',
     top: '320px',
     left: '14px',
+    bottom: '0px',
+    right: '0px',
     /* Stat position */
     width: '72',
     height: '40',
@@ -71,8 +74,6 @@ export const className = `
     font-family: 'Helvetica Neue';
     font-size: 16px;
     color: ${config.color};
-    top: ${config.top};
-    left: ${config.left};
 `;
 
 const isEmpty = (value) => {
