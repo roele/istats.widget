@@ -70,4 +70,4 @@ workflows:
   main:
     jobs:
       - build:
-          context: sonarcloud
+          context: SonarCloud
