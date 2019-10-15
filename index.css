@@ -77,11 +77,11 @@
 }
 
 [class^="icon-"], [class*=" icon-"] {
-  font-family:'Icons'; /* NOSONAR */
-  background:none;
-  width:auto;
-  height:auto;
-  font-style:normal
+  font-family: 'Icons', sans-serif;
+  background: none;
+  width: auto;
+  height: auto;
+  font-style: normal
 }
 .icon-aaabattery:before{content:'\f413'}
 .icon-abacus:before{content:'\f261'}
