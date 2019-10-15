@@ -41,7 +41,7 @@ test('Parser handles istats input', () => {
 });
 
 test('Parser handles istats partial input', () => {
-  let input = '--- CPU Stats ---\n' +
+  let partialIn = '--- CPU Stats ---\n' +
               'CPU temp:               47.63°C     ▁▂▃▅▆▇\n' +
               '\n' +
               '--- Fan Stats ---\n' +
@@ -50,7 +50,7 @@ test('Parser handles istats partial input', () => {
               'Fan 1 speed:            1995 RPM    ▁▂▃▅▆▇\n' +
               'For more stats run `istats extra` and follow the instructions.';
 
-  let output = {
+  let partialOut = {
       "cpu": {
           "cpu-temp": "47.6"
       },
@@ -60,20 +60,20 @@ test('Parser handles istats partial input', () => {
           "fan-1-speed": "1995"
       }
   };
-  expect(IStatsParser.parse(input)).toEqual(output);
+  expect(IStatsParser.parse(partialIn)).toEqual(partialOut);
 });
 
 test('Parser handles istats input with zero value', () => {
-  let input = '--- Fan Stats ---\n' +
+  let zeroIn = '--- Fan Stats ---\n' +
               'Total fans in system:   1\n' +
               'Fan 0 speed:            0 RPM    ▁▂▃▅▆▇\n' +
               'For more stats run `istats extra` and follow the instructions.';
 
-  let output = {
+  let zeroOut = {
       "fan": {
           "total-fans-in-system": "1",
           "fan-0-speed": "0"
       }
   };
-  expect(IStatsParser.parse(input)).toEqual(output);
+  expect(IStatsParser.parse(zeroIn)).toEqual(zeroOut);
 });

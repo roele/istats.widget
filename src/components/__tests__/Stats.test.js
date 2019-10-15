@@ -176,9 +176,9 @@ describe('Stats component', () => {
                 KEY_CPU_TEMP
             ]
         }),
-        output = "";
+        noData = "";
 
-        render(<Stats config={cfg} output={output} />);
+        render(<Stats config={cfg} output={noData} />);
 
         const element = document.querySelector('.stats'),
             stats = document.querySelectorAll('.stat');
@@ -192,7 +192,7 @@ describe('Stats component', () => {
     });
 
     test('ignores unknown section', () => {
-        let output ='--- Unknown Stats ---\n' +
+        let unknown ='--- Unknown Stats ---\n' +
                     'TCGC PECI GPU:          72.0°C      ▁▂▃▅▆▇\n' +
                     'TC1C Core 1 temp: 42.0° C    ▁▂▃▅▆▇\n' +
                     'TC2C Core 2 temp: 43.0° C    ▁▂▃▅▆▇\n' +
@@ -202,7 +202,7 @@ describe('Stats component', () => {
                     'TPCD Platform Controller Hub Die: 65.0°C      ▁▂▃▅▆▇\n' +
                     'For more stats run `istats extra` and follow the instructions.';
 
-        render(<Stats config={config} output={output} />);
+        render(<Stats config={config} output={unknown} />);
 
         const element = document.querySelector('.stats'),
             stats = document.querySelectorAll('.stat');
@@ -215,8 +215,8 @@ describe('Stats component', () => {
         expect(stats.length).toEqual(0);
     });
 
-    function verifyPositionClass(config, output, expectedClass) {
-        render(<Stats config={config} output={output} />);
+    function verifyPositionClass(cfg, out, expectedClass) {
+        render(<Stats config={cfg} output={out} />);
 
         const element = document.querySelector('.stats');
 
