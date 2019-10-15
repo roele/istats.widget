@@ -1,5 +1,5 @@
 @font-face {
-  font-family: 'Icons'; /* NOSONAR */
+  font-family: 'Icons';
   src: url('icons.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
@@ -76,7 +76,13 @@
   }
 }
 
-[class^="icon-"], [class*=" icon-"] {font-family:'Icons';background:none;width:auto;height:auto;font-style:normal}
+[class^="icon-"], [class*=" icon-"] {
+  font-family:'Icons'; /* NOSONAR */
+  background:none;
+  width:auto;
+  height:auto;
+  font-style:normal
+}
 .icon-aaabattery:before{content:'\f413'}
 .icon-abacus:before{content:'\f261'}
 .icon-accountfilter:before{content:'\f05e'}
