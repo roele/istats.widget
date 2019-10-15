@@ -5,6 +5,7 @@
 version: 2.1
 orbs:
   codecov: codecov/codecov@1.0.4
+  sonarcloud: sonarsource/sonarcloud@1.0.0
 jobs:
   build:
     docker:
@@ -39,6 +40,9 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
+      # Run SonarCloud scan
+      - sonarcloud/scan
+
       # Run tests
       - run:
           name: Run unit tests
@@ -62,3 +66,8 @@ jobs:
       # Upload coverage report to codecov.io
       - codecov/upload:
           file: 'reports/coverage/*.json'
+workflows:
+  main:
+    jobs:
+      - build:
+          context: sonarcloud
