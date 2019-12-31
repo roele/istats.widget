@@ -19,7 +19,7 @@
 
 import React from 'react';
 import Stats from '../Stats';
-import { config, output, output_2 } from './Constants.res.js';
+import { config, output } from './Constants.res.js';
 
 import { render } from '@testing-library/react';
 
@@ -31,14 +31,6 @@ const KEY_CPU_TEMP = 'cpu.cpu-temp',
       CLS_ANIMATION_FAN = 'animation-fan-40';
 
 jest.mock('uebersicht');
-
-function verifyIcon(percentage) {
-    let fan_0 = document.querySelector('.stat.fan-fan-0-speed i');
-
-    expect(fan_0).not.toBeNull();
-    expect(fan_0).toBeInTheDocument();
-    expect(fan_0).toHaveClass('animation-fan-' + percentage);
-}
 
 describe('Stats component', () => {
 
@@ -139,34 +131,6 @@ describe('Stats component', () => {
         expect(stats[4].classList.contains('extra-tcgc-peci-gpu')).toBe(true);
         expect(icons[4].classList.contains('icon-gpu-graphicscard')).toBe(true);
         
-    });
-
-    test('renders stats with resetFanAnimation', () => {
-        const spy = jest.spyOn(window, 'requestAnimationFrame');
-
-        render(<Stats config={config} output={output} />);
-
-        let fan_0 = document.querySelector('.stat.fan-fan-0-speed i');
-
-        verifyIcon(40);
-
-        // reset
-        document.getElementsByTagName('html')[0].innerHTML = '';
-
-        render(<Stats config={config} output={output_2} />);
-
-        verifyIcon(80);
-
-        // verify requestAnimationFrame callbacks
-        requestAnimationFrame(() => {
-            expect(fan_0).not.toHaveClass();
-        });
-
-        requestAnimationFrame(() => {
-            expect(fan_0).toHaveClass(CLS_ANIMATION_FAN);
-        });
-
-        expect(spy).toHaveBeenCalledTimes(2);
     });
 
     test('renders no data', () => {

@@ -79,30 +79,3 @@ TC4C Core 4 temp: 44.0° C    ▁▂▃▅▆▇\n\
 TM0P Memory Slot Proximity: 56.88°C     ▁▂▃▅▆▇\n\
 TPCD Platform Controller Hub Die: 65.0°C      ▁▂▃▅▆▇\n\
 For more stats run `istats extra` and follow the instructions.';
-
-export const output_2 = '--- CPU Stats ---\n\
-CPU temp:               47.63°C     ▁▂▃▅▆▇\n\
-\n\
---- Fan Stats ---\n\
-Total fans in system:   2\n\
-Fan 0 speed:            4172 RPM    ▁▂▃▅▆▇\n\
-Fan 1 speed:            4995 RPM    ▁▂▃▅▆▇\n\
-\n\
---- Battery Stats ---\n\
-Battery health:         Good\n\
-Cycle count:            435         ▁▂▃▅▆▇  43.5%\n\
-Max cycles:             1000\n\
-Current charge:         5981 mAh    ▁▂▃▅▆▇  100%\n\
-Maximum charge:         6049 mAh    ▁▂▃▅▆▇  90.7%\n\
-Design capacity:        6669 mAh\n\
-Battery temp:           33.69°C\n\
-\n\
---- Extra Stats ---\n\
-TCGC PECI GPU:          72.0°C      ▁▂▃▅▆▇\n\
-TC1C Core 1 temp: 42.0° C    ▁▂▃▅▆▇\n\
-TC2C Core 2 temp: 43.0° C    ▁▂▃▅▆▇\n\
-TC3C Core 3 temp: 42.0° C    ▁▂▃▅▆▇\n\
-TC4C Core 4 temp: 44.0° C    ▁▂▃▅▆▇\n\
-TM0P Memory Slot Proximity: 56.88°C     ▁▂▃▅▆▇\n\
-TPCD Platform Controller Hub Die: 65.0°C      ▁▂▃▅▆▇\n\
-For more stats run `istats extra` and follow the instructions.';
