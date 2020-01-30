@@ -62,3 +62,19 @@ jobs:
       # Upload coverage report to codecov.io
       - codecov/upload:
           file: 'reports/coverage/*.json'
+
+workflows:
+  version: 2
+  commit:
+    jobs:
+      - build
+  nightly:
+    triggers:
+      - schedule:
+          cron: "00 23 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - build
