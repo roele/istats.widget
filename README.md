@@ -113,6 +113,9 @@ Some basic configuration options can be found in the file `index.jsx` in the top
 * **An error is shown in place of the widget**
     * Please report an issue to https://github.com/roele/istats.widget/issues with the error, environment and hardware details.
     * Did you upgrade your macOS recently? Try re-installing the iStats Ruby gem as indicated in the prerequisites.
+    * Do you use [Ruby Version Manager (rvm)](https://rvm.io/)? To figure out, issue `which istats` in the command line and check if the binary is located at `/Users/{user}/.rvm/rubies/ruby-{version}/bin/istats`. If you use `rvm`, the following steps are necessary as the `istats` binary is installed in another location.
+      * Enable `Load Bash env` in the Übersicht preferences.
+      * Change the `command` constant in the widgets `index.jsx`, to point to the `istats` binary from the `which istats` output (e.g. `/Users/foo/.rvm/rubies/ruby-2.5.1/bin/istats`)
 
 
 ### Credits
