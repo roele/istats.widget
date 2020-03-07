@@ -11,8 +11,7 @@ module.exports = {
     roots: ['<rootDir>/src'],
 
     setupFilesAfterEnv: [
-        '@testing-library/jest-dom/extend-expect',
-        '@testing-library/react/cleanup-after-each'
+        '@testing-library/jest-dom/extend-expect'
     ],
 
     testMatch: ['<rootDir>/src/**/?(*.)test.{js, jsx}'],

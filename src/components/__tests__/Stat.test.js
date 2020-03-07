@@ -29,11 +29,11 @@ describe('Stat component', () => {
 
     test('renders stat', () => {
 
-        render( <Stat config={config} title={"title"} icon={"cpu"} percentage={100} key={"key"} value={"100%"} />);
+        const {container} = render(<Stat config={config} title={"title"} icon={"cpu"} percentage={100} key={"key"} value={"100%"} />);
 
-        const element = document.querySelector('.stat'),
-              icon = document.querySelector('i.icon'),
-              text = document.querySelector('.text');
+        const element = container.querySelector('.stat'),
+              icon = container.querySelector('i.icon'),
+              text = container.querySelector('.text');
 
         expect(element).not.toBeNull();
         expect(element).toBeInTheDocument();
@@ -49,20 +49,20 @@ describe('Stat component', () => {
     });
 
     test('does not render stat without percentage', () => {
-        render(<Stat />);
+        const {container} = render(<Stat />);
 
-        const element = document.querySelector('.stat');
+        const element = container.querySelector('.stat');
 
         expect(element).toBeNull();
         expect(element).not.toBeInTheDocument();
     });
 
     test('does render stat with 0 percentage', () => {
-        render(<Stat config={config} title={"title"} icon={"cpu"} percentage={0} key={"key"} value={"0%"} />);
+        const {container} = render(<Stat config={config} title={"title"} icon={"cpu"} percentage={0} key={"key"} value={"0%"} />);
 
-        const element = document.querySelector('.stat'),
-              icon = document.querySelector('i.icon'),
-              text = document.querySelector('.text');
+        const element = container.querySelector('.stat'),
+              icon = container.querySelector('i.icon'),
+              text = container.querySelector('.text');
 
         expect(element).not.toBeNull();
         expect(element).toBeInTheDocument();

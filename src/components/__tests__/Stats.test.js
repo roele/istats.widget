@@ -35,11 +35,11 @@ jest.mock('uebersicht');
 describe('Stats component', () => {
 
     test('renders stats', () => {
-        render(<Stats config={config} output={output} />);
+        const {container} = render(<Stats config={config} output={output} />);
 
-        const element = document.querySelector('.stats'),
-            stats = document.querySelectorAll('.stat'),
-            icons = document.querySelectorAll('.stat i');
+        const element = container.querySelector('.stats'),
+            stats = container.querySelectorAll('.stat'),
+            icons = container.querySelectorAll('.stat i');
 
         expect(element).not.toBeNull();
         expect(element).toBeInTheDocument();
@@ -47,7 +47,7 @@ describe('Stats component', () => {
         expect(stats).not.toBeNull();
         expect(stats).toBeInstanceOf(NodeList);
         expect(stats.length).toEqual(6);
-        
+
         expect(icons).not.toBeNull();
         expect(icons).toBeInstanceOf(NodeList);
         expect(icons.length).toEqual(6);
@@ -98,11 +98,11 @@ describe('Stats component', () => {
             ]
         });
 
-        render(<Stats config={cfg} output={output} />);
+        const {container} = render(<Stats config={cfg} output={output} />);
 
-        const element = document.querySelector('.stats'),
-            stats = document.querySelectorAll('.stat'),
-            icons = document.querySelectorAll('.stat i');
+        const element = container.querySelector('.stats'),
+            stats = container.querySelectorAll('.stat'),
+            icons = container.querySelectorAll('.stat i');
 
         expect(element).not.toBeNull();
         expect(element).toBeInTheDocument();
@@ -130,7 +130,6 @@ describe('Stats component', () => {
 
         expect(stats[4].classList.contains('extra-tcgc-peci-gpu')).toBe(true);
         expect(icons[4].classList.contains('icon-gpu-graphicscard')).toBe(true);
-        
     });
 
     test('renders no data', () => {
@@ -142,10 +141,10 @@ describe('Stats component', () => {
         }),
         noData = "";
 
-        render(<Stats config={cfg} output={noData} />);
+        const {container} = render(<Stats config={cfg} output={noData} />);
 
-        const element = document.querySelector('.stats'),
-            stats = document.querySelectorAll('.stat');
+        const element = container.querySelector('.stats'),
+            stats = container.querySelectorAll('.stat');
 
         expect(element).not.toBeNull();
         expect(element).toBeInTheDocument();
@@ -166,10 +165,10 @@ describe('Stats component', () => {
                     'TPCD Platform Controller Hub Die: 65.0°C      ▁▂▃▅▆▇\n' +
                     'For more stats run `istats extra` and follow the instructions.';
 
-        render(<Stats config={config} output={unknown} />);
+        const {container} = render(<Stats config={config} output={unknown} />);
 
-        const element = document.querySelector('.stats'),
-            stats = document.querySelectorAll('.stat');
+        const element = container.querySelector('.stats'),
+            stats = container.querySelectorAll('.stat');
 
         expect(element).not.toBeNull();
         expect(element).toBeInTheDocument();
@@ -180,9 +179,9 @@ describe('Stats component', () => {
     });
 
     function verifyPositionClass(cfg, out, expectedClass) {
-        render(<Stats config={cfg} output={out} />);
+        const {container} = render(<Stats config={cfg} output={out} />);
 
-        const element = document.querySelector('.stats');
+        const element = container.querySelector('.stats');
 
         expect(element).not.toBeNull();
         expect(element).toBeInTheDocument();
@@ -211,9 +210,9 @@ describe('Stats component', () => {
     test('renders stats position default', () => {
         Object.assign(config, {position: undefined});
 
-        render(<Stats config={config} output={output} />);
+        const {container} = render(<Stats config={config} output={output} />);
 
-        const element = document.querySelector('.stats');
+        const element = container.querySelector('.stats');
 
         expect(element).not.toBeNull();
         expect(element).toBeInTheDocument();
