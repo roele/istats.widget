@@ -23,11 +23,14 @@ import { config, output } from './Constants.res.js';
 
 import { render } from '@testing-library/react';
 
-const KEY_CPU_TEMP = 'cpu.cpu-temp',
-      CLS_CPU_TEMP = 'cpu-cpu-temp',
-      CLS_FAN_0_SPEED = 'fan-fan-0-speed',
-      CLS_ICON_CPU = 'icon-cpu-processor',
-      CLS_ICON_FAN = 'icon-fan',
+const KEY_CPU_TEMP      = 'cpu.cpu-temp',
+      CSS_STATS         = '.stats',
+      CSS_STAT          = '.stat',
+      CSS_STAT_ICON     = '.stat i',
+      CLS_CPU_TEMP      = 'cpu-cpu-temp',
+      CLS_FAN_0_SPEED   = 'fan-fan-0-speed',
+      CLS_ICON_CPU      = 'icon-cpu-processor',
+      CLS_ICON_FAN      = 'icon-fan',
       CLS_ANIMATION_FAN = 'animation-fan-40';
 
 jest.mock('uebersicht');
@@ -37,9 +40,9 @@ describe('Stats component', () => {
     test('renders stats', () => {
         const {container} = render(<Stats config={config} output={output} />);
 
-        const element = container.querySelector('.stats'),
-            stats = container.querySelectorAll('.stat'),
-            icons = container.querySelectorAll('.stat i');
+        const element = container.querySelector(CSS_STATS),
+            stats = container.querySelectorAll(CSS_STAT),
+            icons = container.querySelectorAll(CSS_STAT_ICON);
 
         expect(element).not.toBeNull();
         expect(element).toBeInTheDocument();
@@ -100,9 +103,9 @@ describe('Stats component', () => {
 
         const {container} = render(<Stats config={cfg} output={output} />);
 
-        const element = container.querySelector('.stats'),
-            stats = container.querySelectorAll('.stat'),
-            icons = container.querySelectorAll('.stat i');
+        const element = container.querySelector(CSS_STATS),
+            stats = container.querySelectorAll(CSS_STAT),
+            icons = container.querySelectorAll(CSS_STAT_ICON);
 
         expect(element).not.toBeNull();
         expect(element).toBeInTheDocument();
@@ -143,8 +146,8 @@ describe('Stats component', () => {
 
         const {container} = render(<Stats config={cfg} output={noData} />);
 
-        const element = container.querySelector('.stats'),
-            stats = container.querySelectorAll('.stat');
+        const element = container.querySelector(CSS_STATS),
+            stats = container.querySelectorAll(CSS_STAT);
 
         expect(element).not.toBeNull();
         expect(element).toBeInTheDocument();
@@ -167,8 +170,8 @@ describe('Stats component', () => {
 
         const {container} = render(<Stats config={config} output={unknown} />);
 
-        const element = container.querySelector('.stats'),
-            stats = container.querySelectorAll('.stat');
+        const element = container.querySelector(CSS_STATS),
+            stats = container.querySelectorAll(CSS_STAT);
 
         expect(element).not.toBeNull();
         expect(element).toBeInTheDocument();
@@ -181,7 +184,7 @@ describe('Stats component', () => {
     function verifyPositionClass(cfg, out, expectedClass) {
         const {container} = render(<Stats config={cfg} output={out} />);
 
-        const element = container.querySelector('.stats');
+        const element = container.querySelector(CSS_STATS);
 
         expect(element).not.toBeNull();
         expect(element).toBeInTheDocument();
@@ -212,7 +215,7 @@ describe('Stats component', () => {
 
         const {container} = render(<Stats config={config} output={output} />);
 
-        const element = container.querySelector('.stats');
+        const element = container.querySelector(CSS_STATS);
 
         expect(element).not.toBeNull();
         expect(element).toBeInTheDocument();

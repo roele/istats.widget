@@ -23,6 +23,10 @@ import { config } from './Constants.res.js';
 
 import { render } from '@testing-library/react';
 
+const CSS_STAT          = '.stat',
+      CSS_STAT_ICON     = 'i.icon',
+      CSS_TEXT          = '.text';
+
 jest.mock('uebersicht');
 
 describe('Stat component', () => {
@@ -31,9 +35,9 @@ describe('Stat component', () => {
 
         const {container} = render(<Stat config={config} title={"title"} icon={"cpu"} percentage={100} key={"key"} value={"100%"} />);
 
-        const element = container.querySelector('.stat'),
-              icon = container.querySelector('i.icon'),
-              text = container.querySelector('.text');
+        const element = container.querySelector(CSS_STAT),
+              icon = container.querySelector(CSS_STAT_ICON),
+              text = container.querySelector(CSS_TEXT);
 
         expect(element).not.toBeNull();
         expect(element).toBeInTheDocument();
@@ -51,7 +55,7 @@ describe('Stat component', () => {
     test('does not render stat without percentage', () => {
         const {container} = render(<Stat />);
 
-        const element = container.querySelector('.stat');
+        const element = container.querySelector(CSS_STAT);
 
         expect(element).toBeNull();
         expect(element).not.toBeInTheDocument();
@@ -60,9 +64,9 @@ describe('Stat component', () => {
     test('does render stat with 0 percentage', () => {
         const {container} = render(<Stat config={config} title={"title"} icon={"cpu"} percentage={0} key={"key"} value={"0%"} />);
 
-        const element = container.querySelector('.stat'),
-              icon = container.querySelector('i.icon'),
-              text = container.querySelector('.text');
+        const element = container.querySelector(CSS_STAT),
+              icon = container.querySelector(CSS_STAT_ICON),
+              text = container.querySelector(CSS_TEXT);
 
         expect(element).not.toBeNull();
         expect(element).toBeInTheDocument();
