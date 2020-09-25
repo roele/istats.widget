@@ -74,6 +74,7 @@ export const className = `
     font-family: 'Helvetica Neue';
     font-size: 16px;
     color: ${config.color};
+    pointer-events: none;
 `;
 
 const isEmpty = (value) => {
