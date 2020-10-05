@@ -65,7 +65,7 @@ workflows:
   version: 2
   commit:
     jobs:
-      - build
+      - build:
         context:
           - DockerHub
   nightly:
@@ -77,6 +77,6 @@ workflows:
               only:
                 - master
     jobs:
-      - build
+      - build:
         context:
           - DockerHub
