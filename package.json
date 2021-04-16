@@ -24,7 +24,7 @@
     "lint": "eslint --ext .js --ext .jsx .",
     "pretest": "npm run lint",
     "test": "jest",
-    "code:coverage": "jest --coverage",
+    "test:coverage": "jest --coverage",
     "clean": "rm -rf dist reports",
     "prebuild": "npm run clean && npm run test",
     "build": "mkdir -p dist/istats.widget && rsync -r -R index.jsx index.css icons.ttf src/ dist/istats.widget --exclude={'__mocks__','__tests__'}",

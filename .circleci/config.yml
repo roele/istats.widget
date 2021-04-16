@@ -5,6 +5,7 @@
 version: 2.1
 orbs:
   codecov: codecov/codecov@1.0.4
+  sonarcloud: sonarsource/sonarcloud@1.0.2
 jobs:
   build:
     docker:
@@ -61,6 +62,9 @@ jobs:
       - codecov/upload:
           file: 'reports/coverage/*.json'
 
+      # Run Sonarcloud scan
+      - sonarcloud/scan
+
 workflows:
   version: 2
   commit:
@@ -68,6 +72,7 @@ workflows:
       - build:
           context:
             - DockerHub
+            - SonarCloud
   nightly:
     triggers:
       - schedule:
@@ -80,3 +85,4 @@ workflows:
       - build:
             context:
             - DockerHub
+            - SonarCloud
