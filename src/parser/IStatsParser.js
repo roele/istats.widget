@@ -18,11 +18,11 @@
  */
 
 const isEmpty = (line) => {
-    return !line || line.match(/(\r|\n)/);
+    return !line || line.match(/[\r|\n]/);
 }
 
 const isSection = (line) => {
-    return line.match(/---.*?/);
+    return line.match(/---.*/);
 }
 
 const getSectionName = (line) => {
@@ -32,7 +32,7 @@ const getSectionName = (line) => {
 const getData = (line) => {
     let e = line.split(':'),
         k = e[0].toLowerCase().replace(/[ ]/g,'-').replace(/[\t\n\r]/g, ''),
-        v = e.length > 1 ? e[1].trim().replace(/.*?(\d+)(\.\d{0,1})*.*/, '$1$2') : undefined,
+        v = e.length > 1 ? e[1].trim().replace(/.*?(\d+)(\.\d?)*.*/, '$1$2') : undefined,
         m = e.length > 1 ? e[1].trim().match(/.*?(\d{1,3})(\.\d{1})?%.*/, '$1$2') : false,
         p = e.length > 1 && m ? e[1].trim().replace(/.*?(\d{1,3})(\.\d{1})?%.*/, '$1$2') : undefined;
 
@@ -53,7 +53,11 @@ const handleSection = (section, o, data) => {
     }
 
     if (section == 'Battery Stats') {
-        addSection(o, 'battery', data);
+        o['battery'] = o['battery'] || {};
+        o['battery'][data.key] = [data.value];
+        if (data.percentage && !Number.isNaN(data.percentage)) {
+            o['battery'][data.key].push(Number.parseFloat(data.percentage));
+        }
     }
 
     if (section == 'Extra Stats') {
@@ -64,18 +68,12 @@ const handleSection = (section, o, data) => {
 const addSection = (obj, key, data) => {
     obj[key] = obj[key] || {};
     obj[key][data.key] = data.value;
-
-    // TODO: handle more generically
-    if (key === 'battery') {
-        obj[key][data.key] = [data.value];
-        if (data.percentage && !Number.isNaN(data.percentage)) {
-            obj[key][data.key].push(Number.parseFloat(data.percentage));
-        }
-    }
 }
+
 /**
  * IStatsParser provides methods to parse istats CLI input.
- */export default class IStatsParser {
+ */
+export default class IStatsParser {
 
     /**
      * Parses the istats command line {@code input} into an object.
