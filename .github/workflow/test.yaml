@@ -1,0 +1,40 @@
+name: Build & Test
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        node-version: [14.x, 16.x]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
+    - name: Clean Install
+      run: npm ci
+
+    - name: Run test
+      run: npm run test:coverage
+
+    - name: Coverage report
+      uses: codecov/codecov-action@v2
+      with:
+        directory: ./reports/coverage
+        flags: unittests
+
+    - name: SonarCloud Scan
+      uses: SonarSource/sonarcloud-github-action@v1.6
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
