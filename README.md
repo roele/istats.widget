@@ -1,6 +1,6 @@
 # iStats Widget
 
-[![CircleCI](https://img.shields.io/circleci/build/github/roele/istats.widget/master)](https://app.circleci.com/pipelines/github/roele/istats.widget?branch=master)
+![GitHub Actions](https://github.com/roele/istats.widget/actions/workflows/test.yml/badge.svg?branch=master)
 [![CodeCov](https://img.shields.io/codecov/c/github/roele/istats.widget/master.svg)](https://codecov.io/gh/roele/istats.widget)
 [![Sonar Quality Gate](https://img.shields.io/sonar/quality_gate/roele_istats.widget?server=https%3A%2F%2Fsonarcloud.io)](https://sonarcloud.io/dashboard?id=roele_istats.widget)
 [![Apache-2.0](https://img.shields.io/github/license/roele/istats.widget.svg)](https://github.com/roele/istats.widget/blob/master/LICENSE)
