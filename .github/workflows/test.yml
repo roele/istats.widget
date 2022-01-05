@@ -3,8 +3,8 @@ name: Lint & Test
 on:
   push:
   pull_request:
-  schedule:
-    - cron:  '0 1 * * *'
+  # schedule:
+  #   - cron:  '0 1 * * *'
 
 
 jobs:
