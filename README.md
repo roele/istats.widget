@@ -21,7 +21,7 @@ XCode Command Line Tools installed. Follow the steps outlined below to install t
 1. Open the Terminal.app
 2. Issue the command `xcode-select --install`
 3. Issue the command `sudo gem install iStats`
-4. Issue the command `$(which istats)` and check for the output.
+4. Issue the command `istats` and check for the output.
 
 ### Widget installation
 
