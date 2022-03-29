@@ -5,6 +5,8 @@
 [![Sonar Quality Gate](https://img.shields.io/sonar/quality_gate/roele_istats.widget?server=https%3A%2F%2Fsonarcloud.io)](https://sonarcloud.io/dashboard?id=roele_istats.widget)
 [![Apache-2.0](https://img.shields.io/github/license/roele/istats.widget.svg)](https://github.com/roele/istats.widget/blob/master/LICENSE)
 
+> ⚠️ The `iStats Ruby Gem` does not support the ARM architecture and therefore the widget does not work reliably on Apple M1 CPUs (issue [#53](https://github.com/roele/istats.widget/issues/53)).
+
 Made for [Übersicht](http://tracesof.net/uebersicht/).
 
 Uses the [iStats Ruby Gem](https://github.com/Chris911/iStats "iStats") to obtain SMC information about your system.
